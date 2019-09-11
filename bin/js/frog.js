@@ -16,7 +16,6 @@ class Frog {
             this.tongueBodiesList.push(Frog.scene.matter.add.image(300, 100 + 50*i, 'tongue', null , this.getTongueOptions()));
 
             if (i>0) {
-                //this.scene.matter.add.joint(this.tongueBodiesList[i], this.tongueBodiesList[i-1], 45, 0.5);
                 this.scene.matter.add.constraint(this.tongueBodiesList[i], this.tongueBodiesList[i-1], 5, 1, {
                     pointA: { x: 0, y: -5 },
                     pointB: { x: 0, y: 5 }
@@ -65,15 +64,3 @@ class Frog {
     }
 
 }
-
-/*
-    frogTest.setBounce(1);
-    frogTest.setFriction(0, 0, 0);
-
-    setInterval(function(){
-        frogTest.y = 100;
-        frogTest.x = 300;
-        frogTest.setVelocity(0, 0);
-        frogTest.setAngularVelocity(0);
-    }, 3000);
-*/
