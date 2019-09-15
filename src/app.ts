@@ -1,11 +1,15 @@
 import {GameScene} from "./scenes/gameScene";
 
-const frogGameConfig: GameConfig = {
+const frogGameConfig: any = {
     type: Phaser.AUTO,
-    width: 600,
-    height: 800,
+    scale: {
+        mode: Phaser.Scale.FIT,
+        parent: 'game',
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: 600,
+        height: 800
+    },
     backgroundColor: '#dddddd',
-    parent: 'root',
     physics: {
         default: 'matter',
         matter: {
