@@ -1,7 +1,6 @@
 export class GameModel {
-    canDragGroup: number;
-    noDragGroup: number;
     generalCategory: number;
+    tongueCategory: number;
 }
 
 export const toLoadList: { key: string, url: string }[] = [

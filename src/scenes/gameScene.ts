@@ -26,9 +26,10 @@ export class GameScene extends Phaser.Scene {
 
     create(): void {
         this.matter.world.setBounds();
-        this.model.canDragGroup = this.matter.world.nextGroup(false);
-        this.model.noDragGroup = this.matter.world.nextGroup(true);
-        this.model.generalCategory = this.matter.world.nextCategory();
+        if (this.model.generalCategory == undefined) {
+            this.model.generalCategory = this.matter.world.nextCategory();
+            this.model.tongueCategory = this.matter.world.nextCategory();
+        }
 
         this.add.image(300, 400, 'bg');
 

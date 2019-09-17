@@ -38,9 +38,8 @@ export class Frog {
                     pointB: {x: 0, y: length}
                 });
 
-                let catTongue = this.scene.matter.world.nextCategory();
-                this.tongueBodiesList[i].setCollisionCategory(catTongue);
-                this.tongueBodiesList[i].setCollidesWith([catTongue, this.model.generalCategory]);
+                this.tongueBodiesList[i].setCollisionCategory(this.model.tongueCategory);
+                this.tongueBodiesList[i].setCollidesWith([this.model.generalCategory]);
             }
         }
 
