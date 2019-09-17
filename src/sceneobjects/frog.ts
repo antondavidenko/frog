@@ -9,23 +9,21 @@ const tongueStep: number = 5;
 export class Frog {
 
     scene: Phaser.Scene;
-    model:GameModel;
+    model: GameModel;
     tongueBodiesList: Phaser.Physics.Matter.Image[];
-    tongueHideTimeout: number;
     tonguePointer: Phaser.GameObjects.Sprite;
 
-    constructor(scene) {
+    constructor(scene:Phaser.Scene) {
         this.scene = scene;
         this.tongueBodiesList = [];
     }
 
-    create(model:GameModel) {
+    create(model: GameModel) {
         this.model = model;
         this.addTongue();
         this.addFrog();
-        this.tongueHide();
         this.addTonquePointer();
-        this.tongueHideTimeout = -1;
+        this.tongueHide();
     }
 
     addTongue() {
@@ -33,10 +31,10 @@ export class Frog {
             this.tongueBodiesList.push(this.scene.matter.add.image(300, 100 + 50 * i, 'tongue', null, this.getTongueOptions()));
 
             if (i > 0) {
-                let stiffness:number = i==1 ? 1 : 0.1;
-                let length:number = i==1 ? 1 : 5;
+                let stiffness: number = i == 1 ? 1 : 0.1;
+                let length: number = i == 1 ? 1 : 5;
                 this.scene.matter.add.constraint(this.tongueBodiesList[i], this.tongueBodiesList[i - 1], length, stiffness, {
-                    pointA: {x: 0, y: -1*length},
+                    pointA: {x: 0, y: -1 * length},
                     pointB: {x: 0, y: length}
                 });
 
@@ -52,22 +50,20 @@ export class Frog {
     }
 
     addTonquePointer() {
-        this.tonguePointer = this.scene.add.sprite(300, tongueAnchorY - tongueItemsCount * tongueStep, 'tongue').setInteractive();
+        this.tonguePointer = this.scene.add.sprite(300, tongueAnchorY - tongueItemsCount * tongueStep, 'tonque_target').setInteractive();
+        this.tonguePointer.scale = 3;
         this.scene.input.setDraggable(this.tonguePointer);
         this.scene.input.on('drag', function (pointer, gameObject, dragX, dragY) {
             gameObject.x = dragX;
             gameObject.y = dragY;
         });
         this.scene.input.on('dragend', function (pointer, gameObject) {
-            gameObject.x = 300;
-            gameObject.y = tongueAnchorY - tongueItemsCount * tongueStep;
             gameObject.scene.frog.tongueHide();
         });
     }
 
     addFrog() {
         let frog = this.scene.add.image(300, 700, 'frog');
-        frog.scaleX = frog.scaleY = 0.35;
         this.scene.matter.add.rectangle(230, 790, 80, 380, this.getHiddenOptions(this.model.generalCategory));
         this.scene.matter.add.rectangle(370, 790, 80, 380, this.getHiddenOptions(this.model.generalCategory));
         this.scene.matter.add.rectangle(300, 970, 80, 380, this.getHiddenOptions(this.model.generalCategory));
@@ -78,6 +74,9 @@ export class Frog {
             let positionY: number = tongueAnchorY - (tongueItemsCount - i) * tongueStep;
             this.setTongueItemPosition(this.tongueBodiesList[i], tongueAnchorX, positionY);
         }
+        this.tonguePointer.x = 300;
+        this.tonguePointer.y = tongueAnchorY - tongueItemsCount * tongueStep;
+        this.scene.input.setDragState(this.scene.input.mousePointer, 0);
     }
 
     setTongueItemPosition(item: Phaser.Physics.Matter.Image, setX: number, setY: number) {
@@ -108,8 +107,7 @@ export class Frog {
     update() {
         this.tongueBodiesList[0].x = this.tonguePointer.x;
         this.tongueBodiesList[0].y = this.tonguePointer.y;
-        this.tongueBodiesList[0].alpha = 0.1;
-        this.tonguePointer.alpha = 0.1;
+        this.tongueBodiesList[0].alpha = 0;
     }
 
 }
