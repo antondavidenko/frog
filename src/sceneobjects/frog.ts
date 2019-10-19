@@ -1,4 +1,3 @@
-import "phaser";
 import {GameModel} from "../model/data";
 
 const tongueItemsCount: number = 30;

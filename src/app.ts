@@ -1,3 +1,5 @@
+import 'phaser';
+
 import {GameScene} from "./scenes/gameScene";
 import {MenuScene} from "./scenes/menuScene";
 

@@ -1,4 +1,3 @@
-import "phaser";
 import {Level} from "./../sceneobjects/level";
 import {Frog} from "./../sceneobjects/frog";
 import {GameModel, toLoadList} from "./../model/data";

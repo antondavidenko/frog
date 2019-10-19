@@ -1,9 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es5"
+    "target": "es5",
+    "module": "commonjs",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
+
   "include": [
     "src/*",
     "libs/*"
+  ],
+
+  "files": [
+    "libs/phaser.d.ts",
+    "src/app.ts"
   ]
 }

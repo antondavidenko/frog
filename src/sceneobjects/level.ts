@@ -1,4 +1,3 @@
-import "phaser";
 import {GameModel, levelGameConfig} from "./../model/data";
 
 export class Level {

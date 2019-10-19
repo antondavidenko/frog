@@ -1,5 +1,3 @@
-import "phaser";
-
 export class MenuScene extends Phaser.Scene {
 
     constructor() {
