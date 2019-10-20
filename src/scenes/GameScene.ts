@@ -1,6 +1,7 @@
 import {Level} from "./../sceneobjects/level";
 import {Frog} from "./../sceneobjects/frog";
 import {GameModel, toLoadList} from "./../model/data";
+import {Button} from "../sceneobjects/Button";
 
 export class GameScene extends Phaser.Scene {
 
@@ -43,7 +44,7 @@ export class GameScene extends Phaser.Scene {
             this.scene.processingBody(event.pairs[0].bodyB);
         });
 
-        this.createMenuButton("MENU", 30, 700);
+        new Button(this).createButton("MENU", 30, 700, this.onButtonClick);
     }
 
     processingBody(body: any) {
@@ -59,27 +60,10 @@ export class GameScene extends Phaser.Scene {
         this.frog.update();
     }
 
-    createMenuButton(label: string, x: number, y: number) {
-        let style = {
-            fontSize: '32px',
-            fontFamily: 'Arial',
-            color: '#ffffff',
-            backgroundColor: '#555555'
-        };
+    onButtonClick = (pointer, gameObject, label) => {
+        this.scene.stop('GameScene');
+        this.matter.world.destroy();
+        this.scene.start("MenuScene");
+    };
 
-        let config1 = {
-            x: x,
-            y: y,
-            padding: 16,
-            text: label,
-            style: style
-        };
-
-        this.make.text(config1).setInteractive().on('pointerdown', function (pointer, gameObject) {
-            this.scene.scene.stop('GameScene');
-            this.scene.scene.shutdown();
-            this.scene.matter.world.destroy();
-            this.scene.scene.start("MenuScene");
-        });
-    }
 }

@@ -6,7 +6,6 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack",
-    "dev": "webpack",
     "deploy": "webpack --config webpack.production.config.js"
   },
   "license": "MIT",
