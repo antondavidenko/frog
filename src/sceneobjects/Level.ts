@@ -10,9 +10,16 @@ export class Level {
 
     create(model: GameModel, levelId: number) {
         for (let i in levelGameConfig[levelId]) {
+            if (levelGameConfig[levelId][i].type == 'fly') {
+                this.scene.add.image(
+                    this.indexToPos(levelGameConfig[levelId][i].x),
+                    this.indexToPos(levelGameConfig[levelId][i].y),
+                    "holder");
+            }
+
             let gameObj = this.scene.matter.add.image(
-                (levelGameConfig[levelId][i].x - 1) * 64 + 32 + 12,
-                (levelGameConfig[levelId][i].y - 1) * 64 + 32 + 12,
+                this.indexToPos(levelGameConfig[levelId][i].x),
+                this.indexToPos(levelGameConfig[levelId][i].y),
                 levelGameConfig[levelId][i].type
             );
             gameObj.setStatic(true);
@@ -20,6 +27,10 @@ export class Level {
             (<any>gameObj.body).label = levelGameConfig[levelId][i].type;
             (<any>gameObj.body).gameObject = gameObj;
         }
+    }
+
+    indexToPos(index:number):number {
+        return (index - 1) * 64 + 32 + 12
     }
 
 }

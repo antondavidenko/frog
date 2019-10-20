@@ -33,11 +33,11 @@ export class GameScene extends Phaser.Scene {
 
         this.add.image(300, 400, 'bg');
 
-        this.frog = new Frog(this);
-        this.frog.create(this.model);
-
         let level = new Level(this);
         level.create(this.model, this.levelId);
+
+        this.frog = new Frog(this);
+        this.frog.create(this.model);
 
         this.matter.world.on('collisionstart', function (event) {
             this.scene.processingBody(event.pairs[0].bodyA);

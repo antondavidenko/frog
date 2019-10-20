@@ -19,6 +19,7 @@ export class Frog {
 
     create(model: GameModel) {
         this.model = model;
+        this.addFrogHolder();
         this.addTongue();
         this.addFrog();
         this.addTonquePointer();
@@ -61,10 +62,14 @@ export class Frog {
     }
 
     addFrog() {
-        let frog = this.scene.add.image(300, 700, 'frog');
+        this.scene.add.image(300, 700, 'frog');
         this.scene.matter.add.rectangle(230, 790, 80, 380, this.getHiddenOptions(this.model.generalCategory));
         this.scene.matter.add.rectangle(370, 790, 80, 380, this.getHiddenOptions(this.model.generalCategory));
         this.scene.matter.add.rectangle(300, 970, 80, 380, this.getHiddenOptions(this.model.generalCategory));
+    }
+
+    addFrogHolder() {
+        this.scene.add.image(300, 700, 'frog_holder');
     }
 
     tongueHide() {
