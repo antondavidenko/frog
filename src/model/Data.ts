@@ -15,13 +15,13 @@ export const toLoadList: { key: string, url: string }[] = [
     {key: 'bg', url: 'assets/bg.png'}
 ];
 
-export interface levelObjectSettings {
+export interface LevelObjectSettings {
     x: number;
     y: number;
     type: string;
 }
 
-export const levelGameConfig: levelObjectSettings[][] = [
+export const levelGameConfig: LevelObjectSettings[][] = [
     [
         {x: 9, y: 3, type: 'fly'},
         {x: 9, y: 4, type: 'box'},

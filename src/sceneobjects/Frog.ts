@@ -11,6 +11,7 @@ export class Frog {
     model: GameModel;
     tongueBodiesList: Phaser.Physics.Matter.Image[];
     tonguePointer: Phaser.GameObjects.Sprite;
+    graphics;
 
     constructor(scene:Phaser.Scene) {
         this.scene = scene;
@@ -21,6 +22,7 @@ export class Frog {
         this.model = model;
         this.addFrogHolder();
         this.addTongue();
+        this.graphics = this.scene.add.graphics();
         this.addFrog();
         this.addTonquePointer();
         this.tongueHide();
@@ -111,6 +113,17 @@ export class Frog {
         this.tongueBodiesList[0].x = this.tonguePointer.x;
         this.tongueBodiesList[0].y = this.tonguePointer.y;
         this.tongueBodiesList[0].alpha = 0;
+
+        this.graphics.clear();
+        for (let i = 1; i < this.tongueBodiesList.length-1; i++ ) {
+            this.drawLine(this.tongueBodiesList[i], this.tongueBodiesList[i+1]);
+        }
+    }
+
+    drawLine(point1:Phaser.Physics.Matter.Image, point2:Phaser.Physics.Matter.Image) {
+        var line = new Phaser.Geom.Line(point1.x, point1.y, point2.x, point2.y);
+        this.graphics.lineStyle(18, 0xff4c4c);
+        this.graphics.strokeLineShape(line);
     }
 
 }
