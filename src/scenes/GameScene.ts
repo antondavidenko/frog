@@ -34,7 +34,7 @@ export class GameScene extends Phaser.Scene {
         this.add.image(300, 400, 'bg');
 
         let level = new Level(this);
-        level.create(this.model, this.levelId);
+        level.create(this.model.levelsList[this.levelId]);
 
         this.frog = new Frog(this);
         this.frog.create(this.model);

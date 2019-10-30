@@ -1,6 +1,7 @@
 export class GameModel {
-    generalCategory: number;
-    tongueCategory: number;
+    public generalCategory: number;
+    public tongueCategory: number;
+    public levelsList: string[][];
 }
 
 export const toLoadList: { key: string, url: string }[] = [
@@ -20,57 +21,3 @@ export interface LevelObjectSettings {
     y: number;
     type: string;
 }
-
-export const levelGameConfig: LevelObjectSettings[][] = [
-    [
-        {x: 9, y: 3, type: 'fly'},
-        {x: 9, y: 4, type: 'box'},
-        {x: 8, y: 4, type: 'box'}
-    ], [
-        {x: 5, y: 3, type: 'fly'},
-        {x: 5, y: 4, type: 'box'},
-        {x: 4, y: 4, type: 'box'},
-        {x: 6, y: 4, type: 'box'},
-        {x: 3, y: 4, type: 'cactus'}
-    ], [
-        {x: 1, y: 1, type: 'fly'},
-        {x: 1, y: 2, type: 'box'},
-        {x: 2, y: 2, type: 'box'},
-        {x: 8, y: 3, type: 'fly'},
-        {x: 8, y: 4, type: 'box'}
-    ], [
-        {x: 5, y: 4, type: 'fly'},
-        {x: 4, y: 5, type: 'box'},
-        {x: 5, y: 5, type: 'box'},
-        {x: 6, y: 5, type: 'box'},
-
-        {x: 4, y: 4, type: 'box'},
-        {x: 6, y: 4, type: 'box'},
-
-        {x: 4, y: 3, type: 'box'},
-        {x: 6, y: 3, type: 'box'},
-
-        {x: 3, y: 4, type: 'cactus'},
-        {x: 7, y: 4, type: 'cactus'},
-
-        {x: 2, y: 5, type: 'box'}
-    ], [
-        {x: 1, y: 1, type: 'fly'},
-        {x: 2, y: 1, type: 'box'},
-        {x: 3, y: 1, type: 'cactus'},
-        {x: 4, y: 1, type: 'fly'},
-        {x: 5, y: 1, type: 'box'},
-        {x: 6, y: 1, type: 'cactus'},
-        {x: 7, y: 1, type: 'fly'},
-        {x: 8, y: 1, type: 'box'},
-        {x: 9, y: 1, type: 'cactus'},
-
-        {x: 5, y: 2, type: 'fly'},
-        {x: 5, y: 3, type: 'box'},
-        {x: 5, y: 4, type: 'cactus'},
-        {x: 5, y: 5, type: 'fly'},
-        {x: 5, y: 6, type: 'box'},
-        {x: 5, y: 7, type: 'cactus'},
-        {x: 5, y: 8, type: 'fly'}
-    ]
-];

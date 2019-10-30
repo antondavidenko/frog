@@ -1,6 +1,7 @@
 import {Button} from "../sceneobjects/Button";
 import {toLoadList} from "../model/Data";
 import {GameModePanel} from "../sceneobjects/menu/GameModePanel";
+import {FrogGame} from "../app";
 
 export class MenuScene extends Phaser.Scene {
 
@@ -14,9 +15,11 @@ export class MenuScene extends Phaser.Scene {
         for (let i of toLoadList) {
             this.load.image(i);
         }
+        this.load.json('gameConfig', 'configs/levels.json');
     }
 
     create(): void {
+        FrogGame.getModel().levelsList = this.cache.json.get('gameConfig').levelsList;
         this.add.image(300, 400, 'bg');
         this.createLevelsList();
         let panel = new GameModePanel(this, this.onModeClick);

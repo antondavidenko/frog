@@ -4,6 +4,7 @@ import {GameScene} from "./scenes/gameScene";
 import {MenuScene} from "./scenes/menuScene";
 import {EditorScene} from "./scenes/EditorScene";
 import {GameModel} from "./model/Data";
+import JSONFile = Phaser.Loader.FileTypes.JSONFile;
 
 const frogGameConfig: any = {
     type: Phaser.AUTO,
@@ -39,7 +40,7 @@ export class FrogGame extends Phaser.Game {
     public static getModel(): GameModel {
         return this.model;
     }
-};
+}
 
 window.onload = () => {
     let game = new FrogGame();

@@ -2,13 +2,13 @@ import {Level} from "./../sceneobjects/level";
 import {toLoadList} from "./../model/Data";
 import {EditorPanel} from "../sceneobjects/editor/EditorPanel";
 import {Utils} from "../Utils";
+import {FrogGame} from "../app";
 
 export class EditorScene extends Phaser.Scene {
 
     private level: Level;
     private levelItemId: string = "fly";
-    private levelId:number;
-    private levelData: string[][] = [[],[],[],[],[],[],[],[],[],[]];
+    private levelData: string[] = [];
 
     constructor() {
         super({key: "EditorScene"});
@@ -21,13 +21,14 @@ export class EditorScene extends Phaser.Scene {
     }
 
     init(params: any): void {
-        this.levelId = params.levelId;
+        this.levelData = FrogGame.getModel().levelsList[params.levelId];
     }
 
     create(): void {
         this.add.image(300, 400, 'bg');
 
         this.level = new Level(this);
+        this.level.renderLevelData(this.levelData);
 
         let panel = new EditorPanel(this, this.onMenuClick, this.onToolClick);
         panel.create();
@@ -36,11 +37,11 @@ export class EditorScene extends Phaser.Scene {
     }
 
     onFieldClick = (pointer) => {
-        let x = Utils.positionToIndex(pointer.x);
-        let y = Utils.positionToIndex(pointer.y);
-        if (x >= 1 && x <= 9 && y >= 1 && y <= 8) {
-            this.levelData[x][y] = this.levelItemId;
-            this.level.renderLevelData(Utils.levelDataConverter(this.levelData));
+        let x = Utils.positionToIndex(pointer.x) - 1;
+        let y = Utils.positionToIndex(pointer.y) - 1;
+        if (x >= 0 && x <= 8 && y >= 0 && y <= 7) {
+            this.levelData[y] = Utils.replaceAt(this.levelData[y], x, Utils.getIdByType(this.levelItemId));
+            this.level.renderLevelData(this.levelData);
         }
     };
 

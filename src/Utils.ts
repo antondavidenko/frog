@@ -1,5 +1,3 @@
-import {LevelObjectSettings} from "./model/Data";
-
 export class Utils {
 
     public static indexToPosition(index: number): number {
@@ -10,15 +8,27 @@ export class Utils {
         return parseInt(((screenPosition + 32 - 12) / 64).toFixed());
     }
 
-    public static levelDataConverter(levelData: string[][]): LevelObjectSettings[] {
-        let result: LevelObjectSettings[] = [];
-        for (let x in levelData) {
-            for (let y in levelData[x]) {
-                if (levelData[x][y] != "NONE") {
-                    result.push({x: parseInt(x), y: parseInt(y), type: levelData[x][y]});
-                }
-            }
-        }
-        return result;
+    public static getTypeById(id:string):string {
+        const typeMap = {
+            "f": "fly",
+            "b": "box",
+            "c": "cactus",
+            " ": "NONE"
+        };
+        return typeMap[id];
+    }
+
+    public static getIdByType(type:string):string {
+        const idMap = {
+            "fly": "f",
+            "box": "b",
+            "cactus": "c",
+            "NONE": " "
+        };
+        return idMap[type];
+    }
+
+    public static replaceAt(string, index, replace) {
+        return string.substring(0, index) + replace + string.substring(index + 1);
     }
 }
