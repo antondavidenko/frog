@@ -15,8 +15,8 @@ export class GameScene extends Phaser.Scene {
     }
 
     preload(): void {
-        for (let i in toLoadList) {
-            this.load.image(toLoadList[i]);
+        for (let i of toLoadList) {
+            this.load.image(i);
         }
     }
 

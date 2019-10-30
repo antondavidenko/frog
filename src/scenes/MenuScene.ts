@@ -6,7 +6,8 @@ export class MenuScene extends Phaser.Scene {
         super({key: "MenuScene"});
     }
 
-    preload(): void {}
+    preload(): void {
+    }
 
     create(): void {
         let button = new Button(this);
@@ -15,6 +16,7 @@ export class MenuScene extends Phaser.Scene {
         button.createButton("level 3", 250, 350, this.onButtonClick);
         button.createButton("level 4", 250, 450, this.onButtonClick);
         button.createButton("level 5", 250, 550, this.onButtonClick);
+        button.createButton("EDITOR", 250, 650, this.onButtonClick);
     }
 
     onButtonClick = (pointer, gameObject, label) => {
@@ -27,7 +29,11 @@ export class MenuScene extends Phaser.Scene {
         };
 
         this.scene.stop('MenuScene');
-        this.scene.start("GameScene", {levelId: labelsMap[label]});
+        if (label != "EDITOR") {
+            this.scene.start("GameScene", {levelId: labelsMap[label]});
+        } else {
+            this.scene.start("EditorScene", {levelId: 4});
+        }
     };
 
 }

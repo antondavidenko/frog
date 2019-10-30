@@ -2,6 +2,7 @@ import 'phaser';
 
 import {GameScene} from "./scenes/gameScene";
 import {MenuScene} from "./scenes/menuScene";
+import {EditorScene} from "./scenes/EditorScene";
 
 const frogGameConfig: any = {
     type: Phaser.AUTO,
@@ -23,7 +24,7 @@ const frogGameConfig: any = {
             debugBodyColor: 0x555555
         }
     },
-    scene: [MenuScene, GameScene]
+    scene: [MenuScene, GameScene, EditorScene]
 };
 
 export class FrogGame extends Phaser.Game {

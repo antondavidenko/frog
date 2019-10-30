@@ -7,16 +7,12 @@ const tongueStep: number = 5;
 
 export class Frog {
 
-    scene: Phaser.Scene;
-    model: GameModel;
-    tongueBodiesList: Phaser.Physics.Matter.Image[];
-    tonguePointer: Phaser.GameObjects.Sprite;
-    graphics;
+    private model: GameModel;
+    private tongueBodiesList: Phaser.Physics.Matter.Image[] = [];
+    private tonguePointer: Phaser.GameObjects.Sprite;
+    private graphics;
 
-    constructor(scene:Phaser.Scene) {
-        this.scene = scene;
-        this.tongueBodiesList = [];
-    }
+    constructor(private scene:Phaser.Scene) {}
 
     create(model: GameModel) {
         this.model = model;
