@@ -1,17 +1,17 @@
 import {Level} from "./../sceneobjects/level";
 import {Frog} from "./../sceneobjects/frog";
-import {GameModel, toLoadList} from "./../model/data";
+import {GameModel, toLoadList} from "./../model/Data";
 import {Button} from "../sceneobjects/Button";
+import {FrogGame} from "../app";
 
 export class GameScene extends Phaser.Scene {
 
-    model: GameModel;
-    frog: Frog;
-    levelId: number;
+    private model: GameModel = FrogGame.getModel();
+    private frog: Frog;
+    private levelId: number;
 
     constructor() {
         super({key: "GameScene"});
-        this.model = new GameModel();
     }
 
     preload(): void {

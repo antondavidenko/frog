@@ -1,4 +1,4 @@
-import {GameModel, levelGameConfig, LevelObjectSettings} from "./../model/data";
+import {GameModel, levelGameConfig, LevelObjectSettings} from "./../model/Data";
 import {Utils} from "../Utils";
 
 export class Level {

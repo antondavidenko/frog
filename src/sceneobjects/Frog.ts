@@ -1,4 +1,4 @@
-import {GameModel} from "../model/data";
+import {GameModel} from "../model/Data";
 
 const tongueItemsCount: number = 30;
 const tongueAnchorX: number = 300;

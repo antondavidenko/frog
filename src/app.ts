@@ -3,6 +3,7 @@ import 'phaser';
 import {GameScene} from "./scenes/gameScene";
 import {MenuScene} from "./scenes/menuScene";
 import {EditorScene} from "./scenes/EditorScene";
+import {GameModel} from "./model/Data";
 
 const frogGameConfig: any = {
     type: Phaser.AUTO,
@@ -28,8 +29,15 @@ const frogGameConfig: any = {
 };
 
 export class FrogGame extends Phaser.Game {
+
+    private static model: GameModel = new GameModel();
+
     constructor() {
         super(frogGameConfig);
+    }
+
+    public static getModel(): GameModel {
+        return this.model;
     }
 };
 

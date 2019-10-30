@@ -1,4 +1,4 @@
-import {Button} from "../sceneobjects/Button";
+import {Button} from "../Button";
 
 export class EditorPanel {
 

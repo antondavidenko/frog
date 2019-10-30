@@ -1,13 +1,13 @@
 import {Level} from "./../sceneobjects/level";
-import {toLoadList} from "./../model/data";
-import {EditorPanel} from "../sceneobjects/EditorPanel";
+import {toLoadList} from "./../model/Data";
+import {EditorPanel} from "../sceneobjects/editor/EditorPanel";
 import {Utils} from "../Utils";
 
 export class EditorScene extends Phaser.Scene {
 
     private level: Level;
     private levelItemId: string = "fly";
-    private levelId;
+    private levelId:number;
     private levelData: string[][] = [[],[],[],[],[],[],[],[],[],[]];
 
     constructor() {
