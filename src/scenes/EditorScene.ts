@@ -30,7 +30,7 @@ export class EditorScene extends Phaser.Scene {
         this.level = new Level(this);
         this.level.renderLevelData(this.levelData);
 
-        let panel = new EditorPanel(this, this.onMenuClick, this.onToolClick);
+        let panel = new EditorPanel(this, this.onMenuClick, this.onToolClick, this.onSaveClick);
         panel.create();
 
         this.input.on('pointerdown', this.onFieldClick, this);
@@ -43,6 +43,17 @@ export class EditorScene extends Phaser.Scene {
             this.levelData[y] = Utils.replaceAt(this.levelData[y], x, Utils.getIdByType(this.levelItemId));
             this.level.renderLevelData(this.levelData);
         }
+    };
+
+    onSaveClick = (pointer, gameObject, label) => {
+        let serverURL:string = "http://antondavidenko.com/games/frog_tst/php/save.php";
+        let saveDataJSON = {"levelsList":FrogGame.getModel().levelsList};
+        let saveData = 'file_data='+JSON.stringify(saveDataJSON);
+        Utils.httpCall("POST", serverURL, saveData, this.onDataSaved);
+    };
+
+    onDataSaved = (params:any) => {
+        console.log(params); //todo: correct processing server respond
     };
 
     onToolClick = (pointer, gameObject, toolId) => {

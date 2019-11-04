@@ -5,7 +5,7 @@ import {FrogGame} from "../app";
 
 export class MenuScene extends Phaser.Scene {
 
-    private modeId: String = "PLAY";
+    private modeId: string;
 
     constructor() {
         super({key: "MenuScene"});
@@ -15,10 +15,13 @@ export class MenuScene extends Phaser.Scene {
         for (let i of toLoadList) {
             this.load.image(i);
         }
-        this.load.json('gameConfig', 'configs/levels.json');
+
+        let nocache:string = "?nocache="+(new Date(Date.now()).getTime());
+        this.load.json('gameConfig', 'configs/levels.json'+nocache);
     }
 
     create(): void {
+        this.modeId = "PLAY";
         FrogGame.getModel().levelsList = this.cache.json.get('gameConfig').levelsList;
         this.add.image(300, 400, 'bg');
         this.createLevelsList();

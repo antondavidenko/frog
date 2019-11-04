@@ -31,4 +31,20 @@ export class Utils {
     public static replaceAt(string, index, replace) {
         return string.substring(0, index) + replace + string.substring(index + 1);
     }
+
+    public static httpCall(method: string, url:string, data:any, callback:(result:any)=>any) {
+        let xhr = new XMLHttpRequest();
+        xhr.open(method, url, true);
+        if (callback) {
+            xhr.onload = function () {
+                callback(JSON.parse(this['responseText']));
+            };
+        }
+        if (data != null) {
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send(data);
+        } else {
+            xhr.send();
+        }
+    }
 }
