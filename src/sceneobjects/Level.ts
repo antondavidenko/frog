@@ -44,10 +44,10 @@ export class Level {
     }
 
     private renderElement(settings:LevelObjectSettings):void {
-        //this.addHolderIfRequired(settings);
-        this.levelContainer.add(
-            this.scene.add.image(settings.x, settings.y, settings.type)
-        );
+        if (settings.type == 'fly') { // todo: use levelContainer for game also. in order to have the same flow
+            this.levelContainer.add(this.scene.add.image(settings.x, settings.y, "holder"));
+        }
+        this.levelContainer.add(this.scene.add.image(settings.x, settings.y, settings.type));
     }
 
     private addHolderIfRequired(settings: LevelObjectSettings) {
@@ -58,7 +58,7 @@ export class Level {
 
     private setupBody(gameObj: Phaser.Physics.Matter.Image, category: number) {
         let Bodies = (<any>Phaser.Physics.Matter).Matter.Bodies;
-        let circle = Bodies.circle(gameObj.x, gameObj.y, 32);
+        let circle = Bodies.circle(gameObj.x, gameObj.y, 32 + 5); //todo: move magic number to dedicated place in code
         gameObj.setExistingBody(circle);
         gameObj.setStatic(true);
         gameObj.setCollisionCategory(category);

@@ -1,9 +1,9 @@
 import {GameModel} from "../model/Data";
 
-const tongueItemsCount: number = 30;
+const tongueItemsCount: number = 60;
 const tongueAnchorX: number = 300;
 const tongueAnchorY: number = 750;
-const tongueStep: number = 5;
+const tongueStep: number = 2;
 
 export class Frog {
 
