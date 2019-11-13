@@ -1,27 +1,26 @@
 import {Level} from "./../sceneobjects/level";
-import {toLoadList} from "./../model/Data";
 import {EditorPanel} from "../sceneobjects/editor/EditorPanel";
 import {Utils} from "../Utils";
-import {FrogGame} from "../app";
+import {BaseScene} from "./BaseScene";
 
-export class EditorScene extends Phaser.Scene {
+export class EditorScene extends BaseScene {
 
     private level: Level;
     private levelItemId: string = "fly";
     private levelData: string[] = [];
+    private levelId: number;
 
     constructor() {
-        super({key: "EditorScene"});
+        super("EditorScene");
     }
 
     preload(): void {
-        for (let i of toLoadList) {
-            this.load.image(i);
-        }
+        super.preload();
     }
 
     init(params: any): void {
-        this.levelData = FrogGame.getModel().levelsList[params.levelId];
+        this.levelId = params.levelId;
+        this.levelData = this.getLevelsList()[params.levelId];
     }
 
     create(): void {
@@ -46,11 +45,18 @@ export class EditorScene extends Phaser.Scene {
     };
 
     onSaveClick = (pointer, gameObject, label) => {
-        let serverURL:string = "http://antondavidenko.com/games/frog_tst/php/save.php";
-        let saveDataJSON = {"levelsList":FrogGame.getModel().levelsList};
+        let serverURL:string = "./php/save.php";
+        this.updateLevelsData();
+        let saveDataJSON = {"levelsList":this.getLevelsList()};
         let saveData = 'file_data='+JSON.stringify(saveDataJSON);
         Utils.httpCall("POST", serverURL, saveData, this.onDataSaved);
     };
+
+    updateLevelsData(): void {
+        let levelsList = this.getLevelsList();
+        levelsList[this.levelId] = this.levelData;
+        this.setLevelsList(levelsList);
+    }
 
     onDataSaved = (params:any) => {
         console.log(params); //todo: correct processing server respond

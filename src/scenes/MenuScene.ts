@@ -1,28 +1,24 @@
-import {Button} from "../sceneobjects/Button";
-import {toLoadList} from "../model/Data";
+import {ButtonsFactory} from "../sceneobjects/ButtonsFactory";
 import {GameModePanel} from "../sceneobjects/menu/GameModePanel";
-import {FrogGame} from "../app";
+import {BaseScene} from "./BaseScene";
 
-export class MenuScene extends Phaser.Scene {
+export class MenuScene extends BaseScene {
 
     private modeId: string;
 
     constructor() {
-        super({key: "MenuScene"});
+        super("MenuScene");
     }
 
     preload(): void {
-        for (let i of toLoadList) {
-            this.load.image(i);
-        }
-
+        super.preload();
         let nocache:string = "?nocache="+(new Date(Date.now()).getTime());
         this.load.json('gameConfig', 'configs/levels.json'+nocache);
     }
 
     create(): void {
         this.modeId = "PLAY";
-        FrogGame.getModel().levelsList = this.cache.json.get('gameConfig').levelsList;
+        this.setLevelsList(this.cache.json.get('gameConfig').levelsList);
         this.add.image(300, 400, 'bg');
         this.createLevelsList();
         let panel = new GameModePanel(this, this.onModeClick);
@@ -30,7 +26,7 @@ export class MenuScene extends Phaser.Scene {
     }
 
     createLevelsList(): void {
-        let button = new Button(this);
+        let button = new ButtonsFactory(this);
         let paddingX: number = 32;
         let gapX: number = 120;
         let paddingY: number = 32;
@@ -42,7 +38,7 @@ export class MenuScene extends Phaser.Scene {
                 label = parseInt(label) > 9 ? label : " " + label + " ";
                 let posX: number = paddingX + gapX * x;
                 let posY: number = paddingY + gapY * y;
-                button.createButton(label, posX, posY, this.onButtonClick);
+                button.createTextButton(label, posX, posY, this.onButtonClick);
             }
         }
     }

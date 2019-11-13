@@ -1,6 +1,4 @@
-import {LevelObjectSettings} from "./../model/Data";
 import {Utils} from "../Utils";
-import {FrogGame} from "../app";
 
 export class Level {
 
@@ -10,22 +8,24 @@ export class Level {
         this.levelContainer = this.scene.add.container(0, 0);
     }
 
-    public create(levelData: string[]): void {
+    public create(levelData: string[], generalCategory: number): void {
         for (let y in levelData) {
             for (let x in levelData[y].split("")) {
                 let type = Utils.getTypeById(levelData[y].charAt(parseInt(x)));
                 if (type != "NONE") {
-                    this.createElement(this.getSettings({x:parseInt(x)+1, y:parseInt(y)+1, type:type}));
+                    this.createElement(
+                        this.getSettings({x:parseInt(x)+1, y:parseInt(y)+1, type:type}),
+                        generalCategory);
                 }
             }
         }
     }
 
-    private createElement(settings:LevelObjectSettings):void {
+    private createElement(settings:LevelObjectSettings, generalCategory: number):void {
         this.addHolderIfRequired(settings);
 
         let gameObj = this.scene.matter.add.image(settings.x, settings.y, settings.type);
-        this.setupBody(gameObj, FrogGame.getModel().generalCategory);
+        this.setupBody(gameObj, generalCategory);
 
         gameObj.body['label'] = settings.type;
         gameObj.body['gameObject'] = gameObj;
@@ -68,4 +68,10 @@ export class Level {
         return {type: input.type, x: Utils.indexToPosition(input.x), y: Utils.indexToPosition(input.y)};
     }
 
+}
+
+interface LevelObjectSettings {
+    x: number;
+    y: number;
+    type: string;
 }

@@ -1,23 +1,21 @@
 import {Level} from "./../sceneobjects/level";
 import {Frog} from "./../sceneobjects/frog";
-import {GameModel, toLoadList} from "./../model/Data";
-import {Button} from "../sceneobjects/Button";
-import {FrogGame} from "../app";
+import {ButtonsFactory} from "../sceneobjects/ButtonsFactory";
+import {BaseScene} from "./BaseScene";
 
-export class GameScene extends Phaser.Scene {
+export class GameScene extends BaseScene {
 
-    private model: GameModel = FrogGame.getModel();
     private frog: Frog;
     private levelId: number;
+    private generalCategory: number;
+    private tongueCategory: number;
 
     constructor() {
-        super({key: "GameScene"});
+        super("GameScene");
     }
 
     preload(): void {
-        for (let i of toLoadList) {
-            this.load.image(i);
-        }
+        super.preload();
     }
 
     init(params: any): void {
@@ -25,26 +23,25 @@ export class GameScene extends Phaser.Scene {
     }
 
     create(): void {
+        this.generalCategory = this.generalCategory == undefined ? this.matter.world.nextCategory() : this.generalCategory;
+        this.tongueCategory = this.tongueCategory == undefined ? this.matter.world.nextCategory() : this.tongueCategory;
+
         this.matter.world.setBounds();
-        if (this.model.generalCategory == undefined) {
-            this.model.generalCategory = this.matter.world.nextCategory();
-            this.model.tongueCategory = this.matter.world.nextCategory();
-        }
 
         this.add.image(300, 400, 'bg');
 
         let level = new Level(this);
-        level.create(this.model.levelsList[this.levelId]);
+        level.create(this.getLevelsList()[this.levelId], this.generalCategory);
 
         this.frog = new Frog(this);
-        this.frog.create(this.model);
+        this.frog.create(this.generalCategory, this.tongueCategory);
 
         this.matter.world.on('collisionstart', function (event) {
             this.scene.processingBody(event.pairs[0].bodyA);
             this.scene.processingBody(event.pairs[0].bodyB);
         });
 
-        new Button(this).createButton("MENU", 30, 700, this.onButtonClick);
+        new ButtonsFactory(this).createTextButton("MENU", 30, 700, this.onButtonClick);
     }
 
     processingBody(body: any) {

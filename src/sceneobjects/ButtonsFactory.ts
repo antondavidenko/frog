@@ -1,4 +1,4 @@
-export class Button {
+export class ButtonsFactory {
 
     constructor(private scene: Phaser.Scene) {
     }
@@ -22,17 +22,21 @@ export class Button {
         return buttonConfig;
     }
 
-    public createButton(label: string, x: number, y: number, callback: Function): void {
+    public createTextButton(label: string, x: number, y: number, callback: Function): Phaser.GameObjects.Text {
         let buttonConfig = this.getButtonConfig(label, x, y);
-        this.scene.make.text(buttonConfig).setInteractive().on('pointerdown', function (pointer) {
+        let result = this.scene.make.text(buttonConfig).setInteractive();
+        result.on('pointerdown', function (pointer) {
             callback(pointer, this, label);
         });
+        return result;
     }
 
-    public createImageButton(image: string, x: number, y: number, callback: Function): void {
-        this.scene.add.image(x, y, image).setInteractive().on('pointerdown', function (pointer) {
+    public createImageButton(image: string, x: number, y: number, callback: Function): Phaser.GameObjects.Image {
+        let result = this.scene.add.image(x, y, image).setInteractive();
+        result.on('pointerdown', function (pointer) {
             callback(pointer, this, image);
         });
+        return result;
     }
 
 }

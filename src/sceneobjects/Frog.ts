@@ -1,5 +1,3 @@
-import {GameModel} from "../model/Data";
-
 const tongueItemsCount: number = 60;
 const tongueAnchorX: number = 300;
 const tongueAnchorY: number = 750;
@@ -7,15 +5,17 @@ const tongueStep: number = 2;
 
 export class Frog {
 
-    private model: GameModel;
+    private tongueCategory:number;
+    private generalCategory:number;
     private tongueBodiesList: Phaser.Physics.Matter.Image[] = [];
     private tonguePointer: Phaser.GameObjects.Sprite;
     private graphics;
 
     constructor(private scene:Phaser.Scene) {}
 
-    create(model: GameModel) {
-        this.model = model;
+    create(generalCategory: number, tongueCategory: number) {
+        this.tongueCategory = tongueCategory;
+        this.generalCategory = generalCategory;
         this.addFrogHolder();
         this.addTongue();
         this.graphics = this.scene.add.graphics();
@@ -36,8 +36,8 @@ export class Frog {
                     pointB: {x: 0, y: length}
                 });
 
-                this.tongueBodiesList[i].setCollisionCategory(this.model.tongueCategory);
-                this.tongueBodiesList[i].setCollidesWith([this.model.generalCategory]);
+                this.tongueBodiesList[i].setCollisionCategory(this.tongueCategory);
+                this.tongueBodiesList[i].setCollidesWith([this.generalCategory]);
             }
         }
 
@@ -61,9 +61,9 @@ export class Frog {
 
     addFrog() {
         this.scene.add.image(300, 700, 'frog');
-        this.scene.matter.add.rectangle(230, 790, 80, 380, this.getHiddenOptions(this.model.generalCategory));
-        this.scene.matter.add.rectangle(370, 790, 80, 380, this.getHiddenOptions(this.model.generalCategory));
-        this.scene.matter.add.rectangle(300, 970, 80, 380, this.getHiddenOptions(this.model.generalCategory));
+        this.scene.matter.add.rectangle(230, 790, 80, 380, this.getHiddenOptions(this.generalCategory));
+        this.scene.matter.add.rectangle(370, 790, 80, 380, this.getHiddenOptions(this.generalCategory));
+        this.scene.matter.add.rectangle(300, 970, 80, 380, this.getHiddenOptions(this.generalCategory));
     }
 
     addFrogHolder() {
