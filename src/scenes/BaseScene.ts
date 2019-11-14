@@ -1,3 +1,5 @@
+import {Background} from "../sceneobjects/Background";
+
 export class BaseScene extends Phaser.Scene {
 
     private toLoadList: { key: string, url: string }[] = [
@@ -28,6 +30,10 @@ export class BaseScene extends Phaser.Scene {
 
     setLevelsList(levelsList:string[][]): void  {
         this.registry.set("levelsList", levelsList);
+    }
+
+    create(): void {
+        new Background(this);
     }
 
 }

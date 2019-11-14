@@ -3,7 +3,7 @@ const tongueAnchorX: number = 300;
 const tongueAnchorY: number = 750;
 const tongueStep: number = 2;
 
-export class Frog {
+export class Tongue {
 
     private tongueCategory:number;
     private generalCategory:number;
@@ -16,15 +16,13 @@ export class Frog {
     create(generalCategory: number, tongueCategory: number) {
         this.tongueCategory = tongueCategory;
         this.generalCategory = generalCategory;
-        this.addFrogHolder();
         this.addTongue();
         this.graphics = this.scene.add.graphics();
-        this.addFrog();
-        this.addTonquePointer();
-        this.tongueHide();
+        this.addTonguePointer();
+        this.hide();
     }
 
-    addTongue() {
+    private addTongue() {
         for (let i = 0; i < tongueItemsCount; i++) {
             this.tongueBodiesList.push(this.scene.matter.add.image(300, 100 + 50 * i, 'tongue', null, this.getTongueOptions()));
 
@@ -46,7 +44,7 @@ export class Frog {
         this.tongueBodiesList[tongueItemsCount - 1].x = tongueAnchorX;
     }
 
-    addTonquePointer() {
+    private addTonguePointer() {
         this.tonguePointer = this.scene.add.sprite(300, tongueAnchorY - tongueItemsCount * tongueStep, 'tonque_target').setInteractive();
         this.tonguePointer.scale = 3;
         this.scene.input.setDraggable(this.tonguePointer);
@@ -59,18 +57,7 @@ export class Frog {
         });
     }
 
-    addFrog() {
-        this.scene.add.image(300, 700, 'frog');
-        this.scene.matter.add.rectangle(230, 790, 80, 380, this.getHiddenOptions(this.generalCategory));
-        this.scene.matter.add.rectangle(370, 790, 80, 380, this.getHiddenOptions(this.generalCategory));
-        this.scene.matter.add.rectangle(300, 970, 80, 380, this.getHiddenOptions(this.generalCategory));
-    }
-
-    addFrogHolder() {
-        this.scene.add.image(300, 700, 'frog_holder');
-    }
-
-    tongueHide() {
+    hide() {
         for (let i = tongueItemsCount - 1; i >= 0; i--) {
             let positionY: number = tongueAnchorY - (tongueItemsCount - i) * tongueStep;
             this.setTongueItemPosition(this.tongueBodiesList[i], tongueAnchorX, positionY);
@@ -80,7 +67,7 @@ export class Frog {
         this.scene.input.setDragState(this.scene.input.mousePointer, 0);
     }
 
-    setTongueItemPosition(item: Phaser.Physics.Matter.Image, setX: number, setY: number) {
+    private setTongueItemPosition(item: Phaser.Physics.Matter.Image, setX: number, setY: number) {
         item.y = setY;
         item.x = setX;
         item.setVelocityX(0);
@@ -89,19 +76,11 @@ export class Frog {
         item.setAngle(0);
     }
 
-    getTongueOptions() {
+    private getTongueOptions() {
         return {
             chamfer: 5,
             density: 0.005,
             frictionAir: 0.05
-        }
-    }
-
-    getHiddenOptions(generalCategory: number) {
-        return {
-            isStatic: true,
-            chamfer: {radius: 20},
-            collisionFilter: {category: generalCategory}
         }
     }
 
@@ -116,7 +95,7 @@ export class Frog {
         }
     }
 
-    drawLine(point1:Phaser.Physics.Matter.Image, point2:Phaser.Physics.Matter.Image) {
+    private drawLine(point1:Phaser.Physics.Matter.Image, point2:Phaser.Physics.Matter.Image) {
         var line = new Phaser.Geom.Line(point1.x, point1.y, point2.x, point2.y);
         this.graphics.lineStyle(18, 0xff4c4c);
         this.graphics.strokeLineShape(line);

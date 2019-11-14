@@ -1,7 +1,7 @@
 import {Level} from "./../sceneobjects/level";
-import {Frog} from "./../sceneobjects/frog";
 import {ButtonsFactory} from "../sceneobjects/ButtonsFactory";
 import {BaseScene} from "./BaseScene";
+import {Frog} from "../sceneobjects/frog/Frog";
 
 export class GameScene extends BaseScene {
 
@@ -23,12 +23,12 @@ export class GameScene extends BaseScene {
     }
 
     create(): void {
+        super.create();
+
         this.generalCategory = this.generalCategory == undefined ? this.matter.world.nextCategory() : this.generalCategory;
         this.tongueCategory = this.tongueCategory == undefined ? this.matter.world.nextCategory() : this.tongueCategory;
 
         this.matter.world.setBounds();
-
-        this.add.image(300, 400, 'bg');
 
         let level = new Level(this);
         level.create(this.getLevelsList()[this.levelId], this.generalCategory);

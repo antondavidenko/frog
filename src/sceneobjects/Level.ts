@@ -44,15 +44,17 @@ export class Level {
     }
 
     private renderElement(settings:LevelObjectSettings):void {
-        if (settings.type == 'fly') { // todo: use levelContainer for game also. in order to have the same flow
-            this.levelContainer.add(this.scene.add.image(settings.x, settings.y, "holder"));
-        }
+        this.addHolderIfRequired(settings, true);
         this.levelContainer.add(this.scene.add.image(settings.x, settings.y, settings.type));
     }
 
-    private addHolderIfRequired(settings: LevelObjectSettings) {
+    private addHolderIfRequired(settings: LevelObjectSettings, toLevelContainer:boolean = false) {
         if (settings.type == 'fly') {
-            this.scene.add.image(settings.x, settings.y, "holder");
+            if (toLevelContainer) {
+                this.levelContainer.add(this.scene.add.image(settings.x, settings.y, "holder"));
+            } else {
+                this.scene.add.image(settings.x, settings.y, "holder");
+            }
         }
     }
 

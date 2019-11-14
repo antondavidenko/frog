@@ -17,9 +17,9 @@ export class MenuScene extends BaseScene {
     }
 
     create(): void {
+        super.create();
         this.modeId = "PLAY";
         this.setLevelsList(this.cache.json.get('gameConfig').levelsList);
-        this.add.image(300, 400, 'bg');
         this.createLevelsList();
         let panel = new GameModePanel(this, this.onModeClick);
         panel.create();
