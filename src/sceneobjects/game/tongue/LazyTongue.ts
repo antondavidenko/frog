@@ -1,9 +1,11 @@
+import {ITongue} from "./ITongue";
+
 const tongueItemsCount: number = 60;
 const tongueAnchorX: number = 300;
 const tongueAnchorY: number = 750;
 const tongueStep: number = 2;
 
-export class Tongue {
+export class LazyTongue implements ITongue {
 
     private tongueCategory:number;
     private generalCategory:number;

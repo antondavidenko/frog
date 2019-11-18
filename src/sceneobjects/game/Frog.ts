@@ -1,13 +1,19 @@
-import {Tongue} from "./Tongue";
+import {LazyTongue} from "./tongue/LazyTongue";
+import {ITongue} from "./tongue/ITongue";
+import {TongueTypes} from "./tongue/TongueTypes";
 
 export class Frog {
 
-    private tongue:Tongue;
+    private tongue:ITongue;
 
     constructor(private scene:Phaser.Scene) {}
 
-    create(generalCategory: number, tongueCategory: number) {
-        this.tongue = new Tongue(this.scene);
+    create(generalCategory: number, tongueCategory: number, tongueType: TongueTypes) {
+        if (tongueType == TongueTypes.LazyTongue) {
+            this.tongue = new LazyTongue(this.scene);
+        } else {
+            console.error("tongueType is not supported");
+        }
         this.addFrogHolder();
         this.tongue.create(generalCategory, tongueCategory);
         this.addFrog(generalCategory);

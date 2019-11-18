@@ -6,12 +6,12 @@ export class GameModePanel {
 
     constructor(private scene: Phaser.Scene, private onModeClickCallback: Function) {}
 
-    public create(): void {
-        this.toolSelection = this.scene.add.image(350 + 112/2, 650 + 68/2, "holder");
+    public create(posY: number): void {
+        this.toolSelection = this.scene.add.image(350 + 112/2, posY + 68/2, "holder");
         this.toolSelection.scale = 1.5;
         let button = new ButtonsFactory(this.scene);
-        button.createTextButton("EDITOR", 150, 650, this.onModeClick);
-        button.createTextButton("PLAY", 350, 650, this.onModeClick);
+        button.createTextButton("EDITOR", 150, posY, this.onModeClick);
+        button.createTextButton("PLAY", 350, posY, this.onModeClick);
     }
 
     onModeClick = (pointer, gameObject, toolId) => {

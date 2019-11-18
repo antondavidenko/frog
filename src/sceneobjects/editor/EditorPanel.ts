@@ -1,10 +1,11 @@
 import {ButtonsFactory} from "../ButtonsFactory";
+import {LevelObjectTypes} from "../../LevelObjectTypes";
 
 export class EditorPanel {
 
     private toolSelection: Phaser.GameObjects.Image;
     private saveButton:Phaser.GameObjects.Text;
-    private selectedItem: string = "fly";
+    private selectedItem: LevelObjectTypes = LevelObjectTypes.FLY;
 
     constructor(private scene: Phaser.Scene, private onMenuCallback: Function, private onSaveCallback: Function) {}
 
@@ -14,15 +15,15 @@ export class EditorPanel {
         let button = new ButtonsFactory(this.scene);
         button.createTextButton("MENU", 30, 700, this.onMenuCallback);
         this.saveButton = button.createTextButton("SAVE", 30, 600, this.onSaveCallback);
-        button.createTextButton("NONE", 170, 700, this.onToolClick);
-        button.createImageButton("fly", 340, 732, this.onToolClick);
-        button.createImageButton("box", 440, 732, this.onToolClick);
-        button.createImageButton("cactus", 540, 732, this.onToolClick);
+        button.createTextButton(LevelObjectTypes.NONE, 170, 700, this.onToolClick);
+        button.createImageButton(LevelObjectTypes.FLY, 340, 732, this.onToolClick);
+        button.createImageButton(LevelObjectTypes.BOX, 440, 732, this.onToolClick);
+        button.createImageButton(LevelObjectTypes.CACTUS, 540, 732, this.onToolClick);
     }
 
     onToolClick = (pointer, gameObject, toolId) => {
-        this.selectedItem;
-        if (toolId == "NONE") {
+        this.selectedItem = toolId;
+        if (toolId == LevelObjectTypes.NONE) {
             this.toolSelection.setX(gameObject.x + gameObject.width / 2);
             this.toolSelection.setY(gameObject.y + gameObject.height / 2);
         } else {

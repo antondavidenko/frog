@@ -1,3 +1,5 @@
+import {LevelObjectTypes} from "./LevelObjectTypes";
+
 export class Utils {
 
     public static indexToPosition(index: number): number {
@@ -8,24 +10,22 @@ export class Utils {
         return parseInt(((screenPosition + 32 - 12) / 64).toFixed());
     }
 
-    public static getTypeById(id:string):string {
-        const typeMap = {
-            "f": "fly",
-            "b": "box",
-            "c": "cactus",
-            " ": "NONE"
-        };
-        return typeMap[id];
+    public static getTypeById(id:string):LevelObjectTypes {
+        const typeMap = new Map();
+        typeMap.set("f", LevelObjectTypes.FLY);
+        typeMap.set("b", LevelObjectTypes.BOX);
+        typeMap.set("c", LevelObjectTypes.CACTUS);
+        typeMap.set(" ", LevelObjectTypes.NONE);
+        return typeMap.get(id);
     }
 
     public static getIdByType(type:string):string {
-        const idMap = {
-            "fly": "f",
-            "box": "b",
-            "cactus": "c",
-            "NONE": " "
-        };
-        return idMap[type];
+        let idMap = new Map();
+        idMap.set(LevelObjectTypes.FLY, "f");
+        idMap.set(LevelObjectTypes.BOX, "b");
+        idMap.set(LevelObjectTypes.CACTUS, "c");
+        idMap.set(LevelObjectTypes.NONE, " ");
+        return idMap.get(type);
     }
 
     public static replaceAt(string, index, replace) {
@@ -47,4 +47,5 @@ export class Utils {
             xhr.send();
         }
     }
+
 }

@@ -1,6 +1,7 @@
 import {ButtonsFactory} from "../sceneobjects/ButtonsFactory";
 import {GameModePanel} from "../sceneobjects/menu/GameModePanel";
 import {BaseScene} from "./BaseScene";
+import {LabelsFactory} from "../sceneobjects/LabelsFactory";
 
 export class MenuScene extends BaseScene {
 
@@ -22,14 +23,20 @@ export class MenuScene extends BaseScene {
         this.setLevelsList(this.cache.json.get('gameConfig').levelsList);
         this.createLevelsList();
         let panel = new GameModePanel(this, this.onModeClick);
-        panel.create();
+        panel.create(680);
+        this.createHeader();
+    }
+
+    createHeader(): void {
+        let header = new LabelsFactory(this).createGeneralLabel("FROG GAME MENU", 0,0);
+        header.x = parseInt(((this.cameras.main.width - header.width)/2).toFixed());
     }
 
     createLevelsList(): void {
         let button = new ButtonsFactory(this);
         let paddingX: number = 32;
         let gapX: number = 120;
-        let paddingY: number = 32;
+        let paddingY: number = 40 + 32;
         let gapY: number = 120;
 
         for (let y = 0; y < 5; y++) {

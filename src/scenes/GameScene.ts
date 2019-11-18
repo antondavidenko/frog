@@ -1,7 +1,10 @@
 import {Level} from "./../sceneobjects/level";
-import {ButtonsFactory} from "../sceneobjects/ButtonsFactory";
 import {BaseScene} from "./BaseScene";
-import {Frog} from "../sceneobjects/frog/Frog";
+import {TongueTypes} from "../sceneobjects/game/tongue/TongueTypes";
+import {Frog} from "../sceneobjects/game/Frog";
+import {GamePanel} from "../sceneobjects/game/GamePanel";
+import {LevelObjectTypes} from "../LevelObjectTypes";
+import {Utils} from "../Utils";
 
 export class GameScene extends BaseScene {
 
@@ -9,6 +12,7 @@ export class GameScene extends BaseScene {
     private levelId: number;
     private generalCategory: number;
     private tongueCategory: number;
+    private panel:GamePanel;
 
     constructor() {
         super("GameScene");
@@ -34,21 +38,36 @@ export class GameScene extends BaseScene {
         level.create(this.getLevelsList()[this.levelId], this.generalCategory);
 
         this.frog = new Frog(this);
-        this.frog.create(this.generalCategory, this.tongueCategory);
+        this.frog.create(this.generalCategory, this.tongueCategory, TongueTypes.LazyTongue);
 
         this.matter.world.on('collisionstart', function (event) {
             this.scene.processingBody(event.pairs[0].bodyA);
             this.scene.processingBody(event.pairs[0].bodyB);
         });
 
-        new ButtonsFactory(this).createTextButton("MENU", 30, 700, this.onButtonClick);
+        this.panel = new GamePanel(this, this.onButtonClick, this.getFlyCount(this.getLevelsList()[this.levelId]));
+        this.panel.create()
+    }
+
+    public getFlyCount(levelData: string[]): number {
+        let flyCount = 0;
+        for (let y in levelData) {
+            for (let x in levelData[y].split("")) {
+                let type = Utils.getTypeById(levelData[y].charAt(parseInt(x)));
+                if (type == LevelObjectTypes.FLY) {
+                    flyCount++;
+                }
+            }
+        }
+        return flyCount;
     }
 
     processingBody(body: any) {
-        if (body.label == "fly") {
+        if (body.label == LevelObjectTypes.FLY) {
             body.gameObject.destroy();
+            this.panel.updateFlyCount();
         }
-        if (body.label == "cactus") {
+        if (body.label == LevelObjectTypes.CACTUS) {
             this.frog.tongueHide();
         }
     }
@@ -57,7 +76,7 @@ export class GameScene extends BaseScene {
         this.frog.update();
     }
 
-    onButtonClick = (pointer, gameObject, label) => {
+    onButtonClick = () => {
         this.scene.stop('GameScene');
         this.matter.world.destroy();
         this.scene.start("MenuScene");

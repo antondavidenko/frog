@@ -1,4 +1,5 @@
 import {Utils} from "../Utils";
+import {LevelObjectTypes} from "../LevelObjectTypes";
 
 export class Level {
 
@@ -12,7 +13,7 @@ export class Level {
         for (let y in levelData) {
             for (let x in levelData[y].split("")) {
                 let type = Utils.getTypeById(levelData[y].charAt(parseInt(x)));
-                if (type != "NONE") {
+                if (type != LevelObjectTypes.NONE) {
                     this.createElement(
                         this.getSettings({x:parseInt(x)+1, y:parseInt(y)+1, type:type}),
                         generalCategory);
@@ -36,7 +37,7 @@ export class Level {
         for (let y in levelData) {
             for (let x in levelData[y].split("")) {
                 let type = Utils.getTypeById(levelData[y].charAt(parseInt(x)));
-                if (type != "NONE") {
+                if (type != LevelObjectTypes.NONE) {
                     this.renderElement(this.getSettings({x:parseInt(x)+1, y:parseInt(y)+1, type:type}));
                 }
             }
@@ -49,7 +50,7 @@ export class Level {
     }
 
     private addHolderIfRequired(settings: LevelObjectSettings, toLevelContainer:boolean = false) {
-        if (settings.type == 'fly') {
+        if (settings.type == LevelObjectTypes.FLY) {
             if (toLevelContainer) {
                 this.levelContainer.add(this.scene.add.image(settings.x, settings.y, "holder"));
             } else {

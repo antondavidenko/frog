@@ -1,4 +1,5 @@
 import {Background} from "../sceneobjects/Background";
+import {LevelObjectTypes} from "../LevelObjectTypes";
 
 export class BaseScene extends Phaser.Scene {
 
@@ -7,9 +8,9 @@ export class BaseScene extends Phaser.Scene {
         {key: 'frog_holder', url: 'assets/frog_holder.png'},
         {key: 'holder', url: 'assets/holder.png'},
         {key: 'tongue', url: 'assets/tongue.png'},
-        {key: 'fly', url: 'assets/fly.png'},
-        {key: 'box', url: 'assets/box.png'},
-        {key: 'cactus', url: 'assets/cactus.png'},
+        {key: LevelObjectTypes.FLY, url: 'assets/fly.png'},
+        {key: LevelObjectTypes.BOX, url: 'assets/box.png'},
+        {key: LevelObjectTypes.CACTUS, url: 'assets/cactus.png'},
         {key: 'tonque_target', url: 'assets/tonque_target.png'},
         {key: 'bg', url: 'assets/bg.png'}
     ];
