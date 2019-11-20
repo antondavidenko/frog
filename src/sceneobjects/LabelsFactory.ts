@@ -8,8 +8,7 @@ export class LabelsFactory {
         strokeThickness: 6
     };
 
-    constructor(private scene: Phaser.Scene) {
-    }
+    constructor(private scene: Phaser.Scene) {}
 
     private getLabelConfig(label: string, x: number, y: number, style:any): any {
         return {

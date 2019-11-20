@@ -1,7 +1,6 @@
 export class ButtonsFactory {
 
-    constructor(private scene: Phaser.Scene) {
-    }
+    constructor(private scene: Phaser.Scene) {}
 
     private getButtonConfig(label: string, x: number, y: number): any {
         let style = {
@@ -11,15 +10,13 @@ export class ButtonsFactory {
             backgroundColor: '#555555'
         };
 
-        let buttonConfig = {
+        return {
             x: x,
             y: y,
             padding: 16,
             text: label,
             style: style
         };
-
-        return buttonConfig;
     }
 
     public createTextButton(label: string, x: number, y: number, callback: Function): Phaser.GameObjects.Text {

@@ -1,10 +1,13 @@
-import {Level} from "./../sceneobjects/level";
+import {Level} from "../sceneobjects/Level";
 import {BaseScene} from "./BaseScene";
 import {TongueTypes} from "../sceneobjects/game/tongue/TongueTypes";
 import {Frog} from "../sceneobjects/game/Frog";
 import {GamePanel} from "../sceneobjects/game/GamePanel";
 import {LevelObjectTypes} from "../LevelObjectTypes";
 import {Utils} from "../Utils";
+import {PopupsFactory} from "../sceneobjects/PopupsFactory";
+
+const levelEndPopupShowDelay: number = 3000;
 
 export class GameScene extends BaseScene {
 
@@ -12,7 +15,7 @@ export class GameScene extends BaseScene {
     private levelId: number;
     private generalCategory: number;
     private tongueCategory: number;
-    private panel:GamePanel;
+    private panel: GamePanel;
 
     constructor() {
         super("GameScene");
@@ -45,9 +48,19 @@ export class GameScene extends BaseScene {
             this.scene.processingBody(event.pairs[0].bodyB);
         });
 
-        this.panel = new GamePanel(this, this.onButtonClick, this.getFlyCount(this.getLevelsList()[this.levelId]));
+        this.panel = new GamePanel(
+            this,
+            this.onButtonClick,
+            this.onLevelEnd,
+            this.getFlyCount(this.getLevelsList()[this.levelId]));
         this.panel.create()
     }
+
+    private onLevelEnd = () => {
+        setTimeout(() => {
+            new PopupsFactory(this).crateLevelWinPopup(this.onButtonClick);
+        }, levelEndPopupShowDelay);
+    };
 
     public getFlyCount(levelData: string[]): number {
         let flyCount = 0;
