@@ -1,4 +1,6 @@
-# Frog game on TypeScript by Phaser 3
+# Frog game
+language: TypeScript 
+framework: Phaser 3
 
 Demo: http://antondavidenko.com/games/frog_v2/
 
@@ -34,6 +36,15 @@ This will optimize and minimize the compiled bundle.
 
 ## Credits
 This work is based off of several existing repos:
+
 https://github.com/troyedwardsjr/phaser3-typescript-webpack
+
+https://github.com/mariyadavydova/starfall-phaser3-typescript
+
 https://github.com/nkholski/phaser3-es6-webpack
+
 https://github.com/lean/phaser-es6-webpack
+
+Most useful Phaser 3 examples:
+
+https://labs.phaser.io/
