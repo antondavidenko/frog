@@ -1,13 +1,39 @@
-# frog
+# Frog game on TypeScript by Phaser 3
 
-Feature improve plan:
+Demo: http://antondavidenko.com/games/frog_v2/
 
-- use => for method should helps to avoid this ???
+# Setup
+You’ll need to install a few things before you have a working copy of the project.
 
-- add editor
--- add server side script to save content
---- add FaceBook auth + personal user folders
+## 1. Clone or download this repo:
+Navigate into your workspace directory.
+Run:
+```git clone https://github.com/antondavidenko/frog.git```
 
-- make tongue longer
+## 2. Install node.js and npm:
+https://nodejs.org/en/
 
-- add ball object
+## 3. Install dependencies (optionally you could install [yarn](https://yarnpkg.com/)):
+Navigate to the cloned repo’s directory.
+Run:
+```npm install```
+or if you choose yarn, just run ```yarn```
+
+## 4. Run the build process:
+Run:
+```npm run start```
+This will start a watch process, so you can change the source and the next build will be prepare automatically
+
+## 5. Run web server:
+In order to see it work you are need for local web server run in your workspace directory.
+
+## Build for deployment:
+Run:
+```npm run deploy```
+This will optimize and minimize the compiled bundle.
+
+## Credits
+This work is based off of several existing repos:
+https://github.com/troyedwardsjr/phaser3-typescript-webpack
+https://github.com/nkholski/phaser3-es6-webpack
+https://github.com/lean/phaser-es6-webpack
