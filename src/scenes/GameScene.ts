@@ -3,9 +3,8 @@ import {BaseScene} from "./BaseScene";
 import {TongueTypes} from "../sceneobjects/game/tongue/TongueTypes";
 import {Frog} from "../sceneobjects/game/Frog";
 import {GamePanel} from "../sceneobjects/game/GamePanel";
-import {LevelObjectTypes} from "../LevelObjectTypes";
-import {Utils} from "../Utils";
 import {PopupsFactory} from "../sceneobjects/PopupsFactory";
+import {LevelDataHelper, LevelObjectTypes} from "../LevelDataHelper";
 
 const levelEndPopupShowDelay: number = 3000;
 
@@ -66,7 +65,7 @@ export class GameScene extends BaseScene {
         let flyCount = 0;
         for (let y in levelData) {
             for (let x in levelData[y].split("")) {
-                let type = Utils.getTypeById(levelData[y].charAt(parseInt(x)));
+                let type = LevelDataHelper.getTypeById(levelData[y].charAt(parseInt(x)));
                 if (type == LevelObjectTypes.FLY) {
                     flyCount++;
                 }

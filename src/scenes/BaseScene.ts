@@ -1,5 +1,5 @@
 import {Background} from "../sceneobjects/Background";
-import {LevelObjectTypes} from "../LevelObjectTypes";
+import {LevelObjectTypes} from "../LevelDataHelper";
 
 export class BaseScene extends Phaser.Scene {
 

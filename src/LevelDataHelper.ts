@@ -1,6 +1,4 @@
-import {LevelObjectTypes} from "./LevelObjectTypes";
-
-export class Utils {
+export class LevelDataHelper {
 
     public static indexToPosition(index: number): number {
         return (index - 1) * 64 + 32 + 12;
@@ -28,24 +26,11 @@ export class Utils {
         return idMap.get(type);
     }
 
-    public static replaceAt(string, index, replace) {
-        return string.substring(0, index) + replace + string.substring(index + 1);
-    }
+}
 
-    public static httpCall(method: string, url:string, data:any, callback:(result:any)=>any) {
-        let xhr = new XMLHttpRequest();
-        xhr.open(method, url, true);
-        if (callback) {
-            xhr.onload = function () {
-                callback(JSON.parse(this['responseText']));
-            };
-        }
-        if (data != null) {
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send(data);
-        } else {
-            xhr.send();
-        }
-    }
-
+export enum LevelObjectTypes {
+    FLY = "fly",
+    BOX = "box",
+    CACTUS = "cactus",
+    NONE = "NONE"
 }

@@ -1,5 +1,4 @@
-import {Utils} from "../Utils";
-import {LevelObjectTypes} from "../LevelObjectTypes";
+import {LevelDataHelper, LevelObjectTypes} from "../LevelDataHelper";
 
 export class Level {
 
@@ -12,7 +11,7 @@ export class Level {
     public create(levelData: string[], generalCategory: number): void {
         for (let y in levelData) {
             for (let x in levelData[y].split("")) {
-                let type = Utils.getTypeById(levelData[y].charAt(parseInt(x)));
+                let type = LevelDataHelper.getTypeById(levelData[y].charAt(parseInt(x)));
                 if (type != LevelObjectTypes.NONE) {
                     this.createElement(
                         this.getSettings({x:parseInt(x)+1, y:parseInt(y)+1, type:type}),
@@ -36,7 +35,7 @@ export class Level {
         this.levelContainer.removeAll(true);
         for (let y in levelData) {
             for (let x in levelData[y].split("")) {
-                let type = Utils.getTypeById(levelData[y].charAt(parseInt(x)));
+                let type = LevelDataHelper.getTypeById(levelData[y].charAt(parseInt(x)));
                 if (type != LevelObjectTypes.NONE) {
                     this.renderElement(this.getSettings({x:parseInt(x)+1, y:parseInt(y)+1, type:type}));
                 }
@@ -68,7 +67,7 @@ export class Level {
     }
 
     private getSettings(input: LevelObjectSettings): LevelObjectSettings {
-        return {type: input.type, x: Utils.indexToPosition(input.x), y: Utils.indexToPosition(input.y)};
+        return {type: input.type, x: LevelDataHelper.indexToPosition(input.x), y: LevelDataHelper.indexToPosition(input.y)};
     }
 
 }

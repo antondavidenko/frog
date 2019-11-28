@@ -1,7 +1,8 @@
-import {Level} from "./../sceneobjects/level";
+import {Level} from "../sceneobjects/level";
 import {EditorPanel} from "../sceneobjects/editor/EditorPanel";
-import {Utils} from "../Utils";
 import {BaseScene} from "./BaseScene";
+import {ServerAPI} from "../ServerAPI";
+import {LevelDataHelper} from "../LevelDataHelper";
 
 export class EditorScene extends BaseScene {
 
@@ -36,20 +37,22 @@ export class EditorScene extends BaseScene {
     }
 
     onFieldClick = (pointer) => {
-        let x = Utils.positionToIndex(pointer.x) - 1;
-        let y = Utils.positionToIndex(pointer.y) - 1;
+        let x = LevelDataHelper.positionToIndex(pointer.x) - 1;
+        let y = LevelDataHelper.positionToIndex(pointer.y) - 1;
         if (x >= 0 && x <= 8 && y >= 0 && y <= 7) {
-            this.levelData[y] = Utils.replaceAt(this.levelData[y], x, Utils.getIdByType(this.panel.getSelectedItem()));
+            let newId:string = LevelDataHelper.getIdByType(this.panel.getSelectedItem());
+            this.levelData[y] = EditorScene.replaceAt(this.levelData[y], x, newId);
             this.level.renderLevelData(this.levelData);
         }
     };
 
+    private static replaceAt(string, index, replace) {
+        return string.substring(0, index) + replace + string.substring(index + 1);
+    }
+
     onSaveClick = () => {
-        let serverURL:string = "./php/save.php";
         this.updateLevelsData();
-        let saveDataJSON = {"levelsList":this.getLevelsList()};
-        let saveData = 'file_data='+JSON.stringify(saveDataJSON);
-        Utils.httpCall("POST", serverURL, saveData, this.onDataSaved);
+        ServerAPI.saveLevelsData(this.getLevelsList(), this.onDataSaved);
         this.panel.setSaveButtonVisible(false);
     };
 

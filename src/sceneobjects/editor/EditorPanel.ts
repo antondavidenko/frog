@@ -1,5 +1,5 @@
 import {ButtonsFactory} from "../ButtonsFactory";
-import {LevelObjectTypes} from "../../LevelObjectTypes";
+import {LevelObjectTypes} from "../../LevelDataHelper";
 
 export class EditorPanel {
 
