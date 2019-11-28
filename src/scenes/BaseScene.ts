@@ -3,6 +3,8 @@ import {LevelObjectTypes} from "../LevelObjectTypes";
 
 export class BaseScene extends Phaser.Scene {
 
+    private background = new Background(this);
+
     private toLoadList: { key: string, url: string }[] = [
         {key: 'frog', url: 'assets/frog.png'},
         {key: 'frog_holder', url: 'assets/frog_holder.png'},
@@ -34,7 +36,11 @@ export class BaseScene extends Phaser.Scene {
     }
 
     create(): void {
-        new Background(this);
+        this.background.create();
+    }
+
+    update(time: number): void {
+        this.background.update(time);
     }
 
 }

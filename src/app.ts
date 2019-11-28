@@ -3,9 +3,10 @@ import 'phaser';
 import {GameScene} from "./scenes/gameScene";
 import {MenuScene} from "./scenes/menuScene";
 import {EditorScene} from "./scenes/EditorScene";
+import {WaterEffect} from "./WaterEffect";
 
 const frogGameConfig: any = {
-    type: Phaser.AUTO,
+    type: Phaser.WEBGL,
     scale: {
         mode: Phaser.Scale.FIT,
         parent: 'game',
@@ -20,7 +21,7 @@ const frogGameConfig: any = {
             gravity: {
                 y: 0
             },
-            debug: false,
+            debug: true,
             debugBodyColor: 0x555555
         }
     },
@@ -35,4 +36,5 @@ export class FrogGame extends Phaser.Game {
 
 window.onload = () => {
     let game = new FrogGame();
+    WaterEffect.setupWaterEffect(game);
 };

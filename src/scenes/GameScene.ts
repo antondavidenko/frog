@@ -41,7 +41,7 @@ export class GameScene extends BaseScene {
         level.create(this.getLevelsList()[this.levelId], this.generalCategory);
 
         this.frog = new Frog(this);
-        this.frog.create(this.generalCategory, this.tongueCategory, TongueTypes.LazyTongue);
+        this.frog.create(this.generalCategory, this.tongueCategory, TongueTypes.ElasticTongue);
 
         this.matter.world.on('collisionstart', function (event) {
             this.scene.processingBody(event.pairs[0].bodyA);
@@ -87,6 +87,7 @@ export class GameScene extends BaseScene {
 
     update(time: number): void {
         this.frog.update();
+        super.update(time);
     }
 
     onButtonClick = () => {
