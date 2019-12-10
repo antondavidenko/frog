@@ -21,7 +21,7 @@ const frogGameConfig: any = {
             gravity: {
                 y: 0
             },
-            debug: true,
+            debug: false,
             debugBodyColor: 0x555555
         }
     },

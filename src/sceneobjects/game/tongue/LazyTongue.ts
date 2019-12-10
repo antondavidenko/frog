@@ -7,24 +7,25 @@ const tongueStep: number = 2;
 
 export class LazyTongue implements ITongue {
 
-    private tongueCategory:number;
-    private generalCategory:number;
-    private tongueBodiesList: Phaser.Physics.Matter.Image[] = [];
-    private tonguePointer: Phaser.GameObjects.Sprite;
-    private graphics;
+    protected tongueCategory: number;
+    protected generalCategory: number;
+    protected tongueBodiesList: Phaser.Physics.Matter.Image[] = [];
+    protected tonguePointer: Phaser.GameObjects.Sprite;
+    protected graphics;
 
-    constructor(private scene:Phaser.Scene) {}
+    constructor(protected scene: Phaser.Scene, protected isRollBackOnDragend: boolean = false) {
+    }
 
     create(generalCategory: number, tongueCategory: number) {
         this.tongueCategory = tongueCategory;
         this.generalCategory = generalCategory;
+        this.addTonguePointer();
         this.addTongue();
         this.graphics = this.scene.add.graphics();
-        this.addTonguePointer();
         this.hide();
     }
 
-    private addTongue() {
+    protected addTongue(): void {
         for (let i = 0; i < tongueItemsCount; i++) {
             this.tongueBodiesList.push(this.scene.matter.add.image(300, 100 + 50 * i, 'tongue', null, this.getTongueOptions()));
 
@@ -36,8 +37,7 @@ export class LazyTongue implements ITongue {
                     pointB: {x: 0, y: length}
                 });
 
-                this.tongueBodiesList[i].setCollisionCategory(this.tongueCategory);
-                this.tongueBodiesList[i].setCollidesWith([this.generalCategory]);
+                this.setupCollision(this.tongueBodiesList[i]);
             }
         }
 
@@ -54,9 +54,11 @@ export class LazyTongue implements ITongue {
             gameObject.x = dragX;
             gameObject.y = dragY;
         });
-        this.scene.input.on('dragend', function (pointer, gameObject) {
-            gameObject.scene.frog.tongueHide();
-        });
+        if (this.isRollBackOnDragend) {
+            this.scene.input.on('dragend', function (pointer, gameObject) {
+                gameObject.scene.frog.tongueHide();
+            });
+        }
     }
 
     hide() {
@@ -69,7 +71,7 @@ export class LazyTongue implements ITongue {
         this.scene.input.setDragState(this.scene.input.mousePointer, 0);
     }
 
-    private setTongueItemPosition(item: Phaser.Physics.Matter.Image, setX: number, setY: number) {
+    protected setTongueItemPosition(item: Phaser.Physics.Matter.Image, setX: number, setY: number) {
         item.y = setY;
         item.x = setX;
         item.setVelocityX(0);
@@ -78,7 +80,7 @@ export class LazyTongue implements ITongue {
         item.setAngle(0);
     }
 
-    private getTongueOptions() {
+    protected getTongueOptions() {
         return {
             chamfer: 5,
             density: 0.005,
@@ -86,21 +88,26 @@ export class LazyTongue implements ITongue {
         }
     }
 
-    update() {
+    update(): void {
         this.tongueBodiesList[0].x = this.tonguePointer.x;
         this.tongueBodiesList[0].y = this.tonguePointer.y;
         this.tongueBodiesList[0].alpha = 0;
 
         this.graphics.clear();
-        for (let i = 1; i < this.tongueBodiesList.length-1; i++ ) {
-            this.drawLine(this.tongueBodiesList[i], this.tongueBodiesList[i+1]);
+        for (let i = 1; i < this.tongueBodiesList.length - 1; i++) {
+            this.drawLine(this.tongueBodiesList[i], this.tongueBodiesList[i + 1]);
         }
     }
 
-    private drawLine(point1:Phaser.Physics.Matter.Image, point2:Phaser.Physics.Matter.Image) {
+    protected drawLine(point1: Phaser.Physics.Matter.Image, point2: Phaser.Physics.Matter.Image) {
         var line = new Phaser.Geom.Line(point1.x, point1.y, point2.x, point2.y);
         this.graphics.lineStyle(18, 0xff4c4c);
         this.graphics.strokeLineShape(line);
+    }
+
+    protected setupCollision(image: Phaser.Physics.Matter.Image) {
+        image.setCollisionCategory(this.tongueCategory);
+        image.setCollidesWith([this.generalCategory]);
     }
 
 }
