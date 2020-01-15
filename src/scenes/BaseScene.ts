@@ -14,7 +14,7 @@ export class BaseScene extends Phaser.Scene {
         {key: LevelObjectTypes.BOX, url: 'assets/box.png'},
         {key: LevelObjectTypes.CACTUS, url: 'assets/cactus.png'},
         {key: 'tonque_target', url: 'assets/tonque_target.png'},
-        {key: 'bg', url: 'assets/bg.png'}
+        {key: 'bg_tile', url: 'assets/bg_tile.png'}
     ];
 
     constructor(key) {

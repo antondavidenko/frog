@@ -1,4 +1,4 @@
-import {Level} from "../sceneobjects/level";
+import {Level} from "../sceneobjects/Level";
 import {EditorPanel} from "../sceneobjects/editor/EditorPanel";
 import {BaseScene} from "./BaseScene";
 import {ServerAPI} from "../ServerAPI";
