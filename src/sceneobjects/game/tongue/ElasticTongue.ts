@@ -1,5 +1,6 @@
 import {ITongue} from "./ITongue";
 import {LazyTongue} from "./LazyTongue";
+import {LevelObjectTypes} from "../../../LevelDataHelper";
 
 const tongueItemsCount: number = 10;
 const tongueAnchorX: number = 300;
@@ -9,9 +10,12 @@ const tongueStep: number = 8;
 const maxDistance: number = 25;
 const minDistance: number = 10;
 
+const TONGUE_FIRST_BODY: string = "tongueFirstBody";
+
 export class ElasticTongue extends LazyTongue implements ITongue {
 
     protected constrains: MatterJS.Constraint[] = [];
+    protected tongueFirstBodyUnderCollision: boolean = false;
 
     constructor(protected scene: Phaser.Scene) {
         super(scene);
@@ -31,7 +35,25 @@ export class ElasticTongue extends LazyTongue implements ITongue {
         this.tongueBodiesList[tongueItemsCount - 1].x = tongueAnchorX;
 
         this.tongueBodiesList[0].alpha = 0;
+        this.tongueBodiesList[0].body['label'] = TONGUE_FIRST_BODY;
+
+        this.scene.matter.world.on('collisionstart', this.collisionProcessing);
+        this.scene.matter.world.on('collisionend', this.noCollisionProcessing);
     }
+
+    collisionProcessing = (event) => {
+        if (event.pairs[0].bodyA.label == LevelObjectTypes.BOX && event.pairs[0].bodyB.label == TONGUE_FIRST_BODY
+            || event.pairs[0].bodyB.label == LevelObjectTypes.BOX && event.pairs[0].bodyA.label == TONGUE_FIRST_BODY) {
+            this.tongueFirstBodyUnderCollision = true;
+        }
+    };
+
+    noCollisionProcessing = (event) => {
+        if (event.pairs[0].bodyA.label == LevelObjectTypes.BOX && event.pairs[0].bodyB.label == TONGUE_FIRST_BODY
+            || event.pairs[0].bodyB.label == LevelObjectTypes.BOX && event.pairs[0].bodyA.label == TONGUE_FIRST_BODY) {
+            this.tongueFirstBodyUnderCollision = false;
+        }
+    };
 
     private addConstrainByIndex(index: number) {
         let stiffness: number = index == 1 ? 1 : 0.1;
@@ -58,28 +80,33 @@ export class ElasticTongue extends LazyTongue implements ITongue {
     }
 
     update(): void {
-        let speedX: number = this.tonguePointer.x - this.tongueBodiesList[0].x;
-        let speedY: number = this.tonguePointer.y - this.tongueBodiesList[0].y;
-        this.tongueBodiesList[0].setVelocityX(speedX / 2);
-        this.tongueBodiesList[0].setVelocityY(speedY / 2);
+        this.checkForPointerAndBodyInSync();
+
+        let velocityX: number = this.tonguePointer.x - this.tongueBodiesList[0].x;
+        let velocityY: number = this.tonguePointer.y - this.tongueBodiesList[0].y;
+        this.tongueBodiesList[0].setVelocityX(velocityX / 2);
+        this.tongueBodiesList[0].setVelocityY(velocityY / 2);
 
         this.graphics.clear();
         for (let i = 1; i < this.tongueBodiesList.length - 1; i++) {
             this.drawLine(this.tongueBodiesList[i], this.tongueBodiesList[i + 1]);
         }
 
-        let x1 = this.tongueBodiesList[2].x;
-        let y1 = this.tongueBodiesList[2].y;
-        let x2 = this.tongueBodiesList[1].x;
-        let y2 = this.tongueBodiesList[1].y;
-        let distance = Phaser.Math.Distance.Between(x1, y1, x2, y2);
-
-        let moveSpeed: number = Math.abs(speedX) + Math.abs(speedY);
+        let distance = this.pointsDistance(this.tongueBodiesList[2], this.tongueBodiesList[1]);
+        let moveSpeed: number = Math.abs(velocityX) + Math.abs(velocityY);
 
         if (distance > maxDistance && moveSpeed < maxDistance) {
             this.addNewSegment();
         } else if (distance < minDistance && this.tongueBodiesList.length > tongueItemsCount) {
             this.deleteSegment();
+        }
+    }
+
+    private checkForPointerAndBodyInSync(): void {
+        if (this.pointsDistance(this.tongueBodiesList[0], this.tonguePointer) >= 32 && this.tongueFirstBodyUnderCollision) {
+            this.tonguePointer.x = this.tongueBodiesList[0].x;
+            this.tonguePointer.y = this.tongueBodiesList[0].y;
+            this.scene.input.setDragState(this.scene.input.mousePointer, 0);
         }
     }
 
@@ -110,6 +137,10 @@ export class ElasticTongue extends LazyTongue implements ITongue {
         for (let i = 1; i < this.tongueBodiesList.length; i++) {
             this.addConstrainByIndex(i);
         }
+    }
+
+    private pointsDistance(point1, point2): number {
+        return Phaser.Math.Distance.Between(point1.x, point1.y, point2.x, point2.y);
     }
 
 }

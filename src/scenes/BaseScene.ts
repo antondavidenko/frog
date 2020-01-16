@@ -13,7 +13,7 @@ export class BaseScene extends Phaser.Scene {
         {key: LevelObjectTypes.FLY, url: 'assets/fly.png'},
         {key: LevelObjectTypes.BOX, url: 'assets/box.png'},
         {key: LevelObjectTypes.CACTUS, url: 'assets/cactus.png'},
-        {key: 'tonque_target', url: 'assets/tonque_target.png'},
+        {key: 'tongue_target', url: 'assets/tongue_target.png'},
         {key: 'bg_tile', url: 'assets/bg_tile.png'}
     ];
 
@@ -31,7 +31,7 @@ export class BaseScene extends Phaser.Scene {
         return this.registry.get("levelsList");
     }
 
-    setLevelsList(levelsList:string[][]): void  {
+    setLevelsList(levelsList: string[][]): void {
         this.registry.set("levelsList", levelsList);
     }
 

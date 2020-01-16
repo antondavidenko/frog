@@ -47,7 +47,7 @@ export class LazyTongue implements ITongue {
     }
 
     private addTonguePointer() {
-        this.tonguePointer = this.scene.add.sprite(300, tongueAnchorY - tongueItemsCount * tongueStep, 'tonque_target').setInteractive();
+        this.tonguePointer = this.scene.add.sprite(300, tongueAnchorY - tongueItemsCount * tongueStep, 'tongue_target').setInteractive();
         this.tonguePointer.scale = 3;
         this.scene.input.setDraggable(this.tonguePointer);
         this.scene.input.on('drag', function (pointer, gameObject, dragX, dragY) {
