@@ -20,7 +20,7 @@ Run:
 
 ## 2. Install node.js and npm:
 https://nodejs.org/en/
-
+Last times it was works with v8.11.3
 
 ## 3. Install dependencies (optionally you could install [yarn](https://yarnpkg.com/)):
 Navigate to the cloned repo’s directory.
