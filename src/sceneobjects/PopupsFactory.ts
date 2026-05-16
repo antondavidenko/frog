@@ -1,5 +1,3 @@
-import {ButtonsFactory} from "./ButtonsFactory";
-
 export class PopupsFactory {
 
     private congratStr:string = "  GREAT! YOU ARE WIN!  \n  THIS LEVEL IS CLEAR!  ";
@@ -32,7 +30,7 @@ export class PopupsFactory {
         this.popupContainer = this.scene.add.container(0, 0);
         this.popupContainer.add(this.getPopupBackground());
         this.popupContainer.add(this.getPopupBody(this.congratStr));
-        this.popupContainer.add(this.getPopupButton("  OK  ", this.buttonCallback));
+        this.popupContainer.add(this.scene.add.textButton(this.popupX + 150, this.popupY + 110, "  OK  ", this.buttonCallback, 50));
         return this.popupContainer;
     }
 
@@ -45,13 +43,6 @@ export class PopupsFactory {
         label = label + "\n\n\n";
         let popupConfig = this.getPopupConfig(label, this.popupX, this.popupY);
         return this.scene.make.text(popupConfig);
-    }
-
-    private getPopupButton(label:string, callback:Function): Phaser.GameObjects.Text {
-        let buttonFactory = new ButtonsFactory(this.scene);
-        let buttonX: number = this.popupX + 150;
-        let buttonY: number = this.popupY + 110;
-        return buttonFactory.createTextButton(label, buttonX, buttonY, callback);
     }
 
     private getPopupBackground():Phaser.GameObjects.Rectangle {

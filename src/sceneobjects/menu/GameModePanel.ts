@@ -1,23 +1,24 @@
-import {ButtonsFactory} from "../ButtonsFactory";
+import TextButton from "../../ui/TextButton";
 
-export class GameModePanel {
+export default class defaultGameModePanel extends Phaser.GameObjects.Container {
 
-    private toolSelection: Phaser.GameObjects.Image;
+  private play: TextButton;
+  private editor: TextButton;
 
-    constructor(private scene: Phaser.Scene, private onModeClickCallback: Function) {}
+  constructor(scene: Phaser.Scene, x: number, y: number, private onModeClickCallback: Function) {
+    super(scene, x, y);
+    scene.add.existing(this);
 
-    public create(posY: number): void {
-        this.toolSelection = this.scene.add.image(350 + 112/2, posY + 68/2, "holder");
-        this.toolSelection.scale = 1.5;
-        let button = new ButtonsFactory(this.scene);
-        button.createTextButton("EDITOR", 150, posY, this.onModeClick);
-        button.createTextButton("PLAY", 350, posY, this.onModeClick);
-    }
+    this.editor = scene.add.textButton(150, 0, "EDITOR", this.onModeClick, 90);
+    this.play = scene.add.textButton(350, 0, "PLAY", this.onModeClick, 45);
+    this.play.setButtonState('pressed');
 
-    onModeClick = (pointer, gameObject, toolId) => {
-        this.onModeClickCallback(pointer, gameObject, toolId);
-        this.toolSelection.setX(gameObject.x + gameObject.width / 2);
-        this.toolSelection.setY(gameObject.y + gameObject.height / 2);
-    }
+    this.add([this.editor, this.play]);
+  }
 
+  onModeClick = (pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.GameObject, toolId: string) => {
+    this.onModeClickCallback(pointer, gameObject, toolId);
+    this.play.setButtonState(toolId === 'PLAY' ? 'pressed' : 'normal');
+    this.editor.setButtonState(toolId === 'EDITOR' ? 'pressed' : 'normal');
+  }
 }

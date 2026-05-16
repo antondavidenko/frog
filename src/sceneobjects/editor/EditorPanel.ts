@@ -1,10 +1,11 @@
-import {ButtonsFactory} from "../ButtonsFactory";
+import TextButton from "../../ui/TextButton";
 import {LevelObjectTypes} from "../../LevelDataHelper";
 
 export class EditorPanel {
 
     private toolSelection: Phaser.GameObjects.Image;
-    private saveButton:Phaser.GameObjects.Text;
+    private saveButton: TextButton;
+    private noneButton: TextButton;
     private selectedItem: LevelObjectTypes = LevelObjectTypes.FLY;
 
     constructor(private scene: Phaser.Scene, private onMenuCallback: Function, private onSaveCallback: Function) {}
@@ -12,24 +13,20 @@ export class EditorPanel {
     public create(): void {
         this.toolSelection = this.scene.add.image(340, 732, "holder");
         this.toolSelection.scale = 1.5;
-        let button = new ButtonsFactory(this.scene);
-        button.createTextButton("MENU", 30, 700, this.onMenuCallback);
-        this.saveButton = button.createTextButton("SAVE", 30, 600, this.onSaveCallback);
-        button.createTextButton(LevelObjectTypes.NONE, 170, 700, this.onToolClick);
-        button.createImageButton(LevelObjectTypes.FLY, 340, 732, this.onToolClick);
-        button.createImageButton(LevelObjectTypes.BOX, 440, 732, this.onToolClick);
-        button.createImageButton(LevelObjectTypes.CACTUS, 540, 732, this.onToolClick);
+        this.scene.add.textButton(30, 700, "MENU", this.onMenuCallback, 70);
+        this.saveButton = this.scene.add.textButton(30, 600, "SAVE", this.onSaveCallback, 70);
+        this.noneButton = this.scene.add.textButton(170, 700, LevelObjectTypes.NONE, this.onToolClick, 70);
+        this.scene.add.imageButton(340, 732, LevelObjectTypes.FLY, this.onToolClick);
+        this.scene.add.imageButton(440, 732, LevelObjectTypes.BOX, this.onToolClick);
+        this.scene.add.imageButton(540, 732, LevelObjectTypes.CACTUS, this.onToolClick);
     }
 
     onToolClick = (pointer, gameObject, toolId) => {
         this.selectedItem = toolId;
-        if (toolId == LevelObjectTypes.NONE) {
-            this.toolSelection.setX(gameObject.x + gameObject.width / 2);
-            this.toolSelection.setY(gameObject.y + gameObject.height / 2);
-        } else {
-            this.toolSelection.setX(gameObject.x);
-            this.toolSelection.setY(gameObject.y);
-        }
+        this.toolSelection.setX(gameObject.x);
+        this.toolSelection.setY(gameObject.y);
+        this.noneButton.setButtonState(toolId === LevelObjectTypes.NONE ? 'pressed' : 'normal');
+        this.toolSelection.visible = toolId !== LevelObjectTypes.NONE;
     };
 
     setSaveButtonVisible(visible:boolean): void {

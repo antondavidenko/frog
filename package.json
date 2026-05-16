@@ -1,8 +1,8 @@
 {
-  "name": "Frog",
-  "version": "0.0.3",
-  "description": "Frog game prototype",
-  "author": "AntonDavidenko by troyedwardsjr",
+  "name": "frog",
+  "version": "0.0.4",
+  "description": "Froggy Hunt",
+  "author": "AntonDavidenko",
   "main": "index.js",
   "scripts": {
     "start": "webpack",
@@ -24,6 +24,7 @@
     "webpack": "3.11.0"
   },
   "dependencies": {
+    "@teampanfu/phaser-nineslice": "^1.1.1",
     "phaser": "3.20.1"
   }
 }

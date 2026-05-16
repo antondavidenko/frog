@@ -1,10 +1,9 @@
-import {ButtonsFactory} from "../ButtonsFactory";
 import {LabelsFactory} from "../LabelsFactory";
 
 export class GamePanel {
 
-    private infoLabel:Phaser.GameObjects.Text;
-    private currentFlyCount:number = 0;
+    private infoLabel: Phaser.GameObjects.Text;
+    private currentFlyCount: number = 0;
 
     constructor(
         private scene: Phaser.Scene,
@@ -14,7 +13,7 @@ export class GamePanel {
 
     public create(): void {
         this.infoLabel = new LabelsFactory(this.scene).createGeneralLabel(this.getInfoString(), 400,700);
-        new ButtonsFactory(this.scene).createTextButton("MENU", 30, 700, this.onMenuCallback);
+        this.scene.add.textButton(30, 700, "MENU", this.onMenuCallback, 70);
     }
 
     getInfoString(): string {

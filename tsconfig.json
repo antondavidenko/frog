@@ -13,10 +13,6 @@
       "es2015.collection"
     ]
   },
-  "include": [
-    "src/*"
-  ],
-  "files": [
-    "src/app.ts"
-  ]
+  "include": [ "src/*", "phaser-custom.d.ts" ],
+  "files": [ "src/app.ts" ]
 }
