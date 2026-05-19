@@ -3,7 +3,6 @@ import {BaseScene} from "./BaseScene";
 import {TongueTypes} from "../sceneobjects/game/tongue/TongueTypes";
 import {Frog} from "../sceneobjects/game/Frog";
 import {GamePanel} from "../sceneobjects/game/GamePanel";
-import {PopupsFactory} from "../sceneobjects/PopupsFactory";
 import {LevelDataHelper, LevelObjectTypes} from "../LevelDataHelper";
 
 const levelEndPopupShowDelay: number = 3000;
@@ -57,7 +56,7 @@ export class GameScene extends BaseScene {
 
     private onLevelEnd = () => {
         setTimeout(() => {
-            new PopupsFactory(this).crateLevelWinPopup(this.onButtonClick);
+            this.add.popup(100, 250, "  GREAT! YOU ARE WIN!  \n  THIS LEVEL IS CLEAR!  ", this.onButtonClick);
         }, levelEndPopupShowDelay);
     };
 

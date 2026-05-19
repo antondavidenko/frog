@@ -1,5 +1,4 @@
-const normalColor = '#ffffff';
-const pressedColor = '#dddddd';
+import config from "./config";
 
 export default class TextButton extends Phaser.GameObjects.Container {
 
@@ -22,7 +21,7 @@ export default class TextButton extends Phaser.GameObjects.Container {
     this.pressedBg = this.scene.add.threeslice(0, 0, 'button_pressed', width);
     this.pressedBg.setVisible(false);
 
-    this.text = this.scene.make.text(this.getTextConfig(label, 0, 0-3)).setInteractive();
+    this.text = this.scene.add.text(0, -3, label, config.textStyle.button).setInteractive();
     this.text.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
         callback(pointer, this, label);
     });
@@ -30,27 +29,15 @@ export default class TextButton extends Phaser.GameObjects.Container {
     this.add([this.normalBg, this.pressedBg, this.text]);
   }
 
-  private getTextConfig(text: string, x: number, y: number): any {
-    const style = {
-        fontSize: '32px',
-        fontFamily: 'Arial',
-        color: normalColor,
-        stroke: '#066406',
-        strokeThickness: 4,
-    };
-
-    return { x, y, padding: 16, text, style: style};
-  }
-
   public setButtonState = (state: String) => {
     if (state === 'normal') {
       this.normalBg.setVisible(true);
       this.pressedBg.setVisible(false);
-      this.text.style.setColor(normalColor);
+      this.text.style.setColor(config.colors.button.normalTextColor);
     } else if (state === 'pressed') {
       this.normalBg.setVisible(false);
       this.pressedBg.setVisible(true);
-      this.text.style.setColor(pressedColor);
+      this.text.style.setColor(config.colors.button.pressedTextColor);
     }
   }
 }

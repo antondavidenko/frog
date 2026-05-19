@@ -2,6 +2,7 @@ import { Background } from "../sceneobjects/Background";
 import ThreeSlice from "../ui/ThreeSlice";
 import ImageButton from "../ui/ImageButton";
 import TextButton from "../ui/TextButton";
+import Popup from "../ui/Popup";
 import { LevelObjectTypes } from "../LevelDataHelper";
 
 export class BaseScene extends Phaser.Scene {
@@ -15,6 +16,7 @@ export class BaseScene extends Phaser.Scene {
     {key: 'button_pressed_left', url: 'assets/ui/button_pressed_left.png'},
     {key: 'button_pressed_center', url: 'assets/ui/button_pressed_center.png'},
     {key: 'button_pressed_right', url: 'assets/ui/button_pressed_right.png'},
+    {key: 'popup9', url: 'assets/ui/popup9.png'},
 
     {key: 'logo', url: 'assets/logo.png'},
 
@@ -34,6 +36,7 @@ export class BaseScene extends Phaser.Scene {
     ThreeSlice.register();
     ImageButton.register();
     TextButton.register();
+    Popup.register();
   }
 
   preload(): void {
