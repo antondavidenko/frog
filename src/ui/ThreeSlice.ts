@@ -1,6 +1,6 @@
 export default class ThreeSlice extends Phaser.GameObjects.Container {
   static register() {
-      (Phaser.GameObjects as any).GameObjectFactory.register('threeslice', function (this: Phaser.GameObjects.GameObjectFactory, x: number, y: number, key: string, width: number = 0) {
+    (Phaser.GameObjects as any).GameObjectFactory.register('threeslice', function (this: Phaser.GameObjects.GameObjectFactory, x: number, y: number, key: string, width: number = 0) {
       const threeSlice = new ThreeSlice(this.scene, x, y, key, width);
       this.displayList.add(threeSlice);
       return threeSlice;

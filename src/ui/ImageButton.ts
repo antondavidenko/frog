@@ -11,7 +11,7 @@ export default class ImageButton extends Phaser.GameObjects.Image {
     super(scene, x, y, key);
     this.setInteractive();
     this.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-        callback(pointer, this, key);
+      callback(pointer, this, key);
     });
   }
 }

@@ -1,10 +1,10 @@
 import 'phaser';
 import { Plugin as NineSlicePlugin } from '@teampanfu/phaser-nineslice';
 
-import {GameScene} from "./scenes/gameScene";
-import {MenuScene} from "./scenes/menuScene";
-import {EditorScene} from "./scenes/EditorScene";
-import {WaterEffect} from "./WaterEffect";
+import { GameScene } from "./scenes/gameScene";
+import { MenuScene } from "./scenes/menuScene";
+import { EditorScene } from "./scenes/EditorScene";
+import { WaterEffect } from "./WaterEffect";
 
 const frogGameConfig: any = {
   type: Phaser.WEBGL,
@@ -29,7 +29,7 @@ const frogGameConfig: any = {
       { key: 'NineSlicePlugin', plugin: NineSlicePlugin, start: true }
     ]
   },
-  scene: [ MenuScene, GameScene, EditorScene ]
+  scene: [MenuScene, GameScene, EditorScene]
 };
 
 export class FrogGame extends Phaser.Game {

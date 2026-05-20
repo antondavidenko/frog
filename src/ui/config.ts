@@ -1,6 +1,5 @@
 export default class UiConfig {
 
-
   static colors = {
     button: {
       normalTextColor: '#ffffff',

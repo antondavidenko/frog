@@ -1,4 +1,4 @@
 export enum TongueTypes {
-    LazyTongue = "LazyTongue",
-    ElasticTongue = "ElasticTongue"
+  LazyTongue = "LazyTongue",
+  ElasticTongue = "ElasticTongue"
 }

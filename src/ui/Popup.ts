@@ -27,8 +27,8 @@ export default class Popup extends Phaser.GameObjects.Container {
   };
 
   private getPopupBackground(): Phaser.GameObjects.Rectangle {
-    const screenWidth:number = this.scene.cameras.main.width + 2;
+    const screenWidth: number = this.scene.cameras.main.width + 2;
     const screenHeight: number = this.scene.cameras.main.height + 2;
-    return this.scene.add.rectangle(screenWidth/2, screenHeight/2, screenWidth, screenHeight, 0x000000, 0.7);
+    return this.scene.add.rectangle(screenWidth / 2, screenHeight / 2, screenWidth, screenHeight, 0x000000, 0.7);
   }
 }

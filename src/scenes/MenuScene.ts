@@ -1,6 +1,6 @@
 import GameModePanel from "../sceneobjects/menu/GameModePanel";
 import LevelSelectPanel from "../sceneobjects/menu/LevelSelectPanel";
-import {BaseScene} from "./BaseScene";
+import { BaseScene } from "./BaseScene";
 
 export class MenuScene extends BaseScene {
 
@@ -12,8 +12,8 @@ export class MenuScene extends BaseScene {
 
   preload(): void {
     super.preload();
-    let nocache:string = "?nocache="+(new Date(Date.now()).getTime());
-    this.load.json('gameConfig', 'configs/levels.json'+nocache);
+    let nocache: string = "?nocache=" + (new Date(Date.now()).getTime());
+    this.load.json('gameConfig', 'configs/levels.json' + nocache);
   }
 
   create(): void {
@@ -28,9 +28,9 @@ export class MenuScene extends BaseScene {
     let levelId: number = parseInt(label) - 1;
     this.scene.stop('MenuScene');
     if (this.modeId == "PLAY") {
-      this.scene.start("GameScene", {levelId: levelId});
+      this.scene.start("GameScene", { levelId: levelId });
     } else {
-      this.scene.start("EditorScene", {levelId: levelId});
+      this.scene.start("EditorScene", { levelId: levelId });
     }
   };
 

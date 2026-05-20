@@ -8,9 +8,9 @@ export default class TextButton extends Phaser.GameObjects.Container {
 
   static register() {
     (Phaser.GameObjects as any).GameObjectFactory.register('textButton', function (this: Phaser.GameObjects.GameObjectFactory, x: number, y: number, label: string, callback: Function, width: number = 0) {
-        const textButton = new TextButton(this.scene, x, y, label, callback, width);
-        this.displayList.add(textButton);
-        return textButton;
+      const textButton = new TextButton(this.scene, x, y, label, callback, width);
+      this.displayList.add(textButton);
+      return textButton;
     });
   }
 
@@ -23,7 +23,7 @@ export default class TextButton extends Phaser.GameObjects.Container {
 
     this.text = this.scene.add.text(0, -3, label, config.textStyle.button).setInteractive();
     this.text.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-        callback(pointer, this, label);
+      callback(pointer, this, label);
     });
 
     this.add([this.normalBg, this.pressedBg, this.text]);

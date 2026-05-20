@@ -9,7 +9,7 @@ export class GamePanel {
     private scene: Phaser.Scene,
     private onMenuCallback: Function,
     private onLevelEndCallback: Function,
-    private initialFlyCount: number) {}
+    private initialFlyCount: number) { }
 
   public create(): void {
     this.infoLabel = this.scene.add.text(400, 700, this.getInfoString(), UiConfig.textStyle.label);
@@ -17,7 +17,7 @@ export class GamePanel {
   }
 
   getInfoString(): string {
-      return `FLY: ${this.initialFlyCount}/${this.currentFlyCount}`;
+    return `FLY: ${this.initialFlyCount}/${this.currentFlyCount}`;
   }
 
   updateFlyCount(): void {
