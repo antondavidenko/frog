@@ -20,7 +20,6 @@ export class BaseScene extends Phaser.Scene {
 
     { key: 'logo', url: 'assets/logo.png' },
 
-    { key: 'frog', url: 'assets/frog.png' },
     { key: 'frog_holder', url: 'assets/frog_holder.png' },
     { key: 'holder', url: 'assets/holder.png' },
     { key: 'tongue', url: 'assets/tongue.png' },
@@ -43,6 +42,7 @@ export class BaseScene extends Phaser.Scene {
     for (let i of this.toLoadList) {
       this.load.image(i);
     }
+    this.load.atlas('frog_spritesheet', 'assets/frog_spritesheet.png', 'assets/frog_spritesheet.json');
   }
 
   getLevelsList(): string[][] {
