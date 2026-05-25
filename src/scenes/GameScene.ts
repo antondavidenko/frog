@@ -5,7 +5,7 @@ import { Frog } from "../sceneobjects/game/Frog";
 import { GamePanel } from "../sceneobjects/game/GamePanel";
 import { LevelDataHelper, LevelObjectTypes } from "../LevelDataHelper";
 
-const levelEndPopupShowDelay: number = 3000;
+const levelEndPopupShowDelay: number = 2000;
 
 export class GameScene extends BaseScene {
 
@@ -29,6 +29,7 @@ export class GameScene extends BaseScene {
 
   create(): void {
     super.create();
+    this.onButtonClick = this.onButtonClick.bind(this);
 
     this.generalCategory = this.generalCategory == undefined ? this.matter.world.nextCategory() : this.generalCategory;
     this.tongueCategory = this.tongueCategory == undefined ? this.matter.world.nextCategory() : this.tongueCategory;
@@ -41,9 +42,9 @@ export class GameScene extends BaseScene {
     this.frog = new Frog(this);
     this.frog.create(this.generalCategory, this.tongueCategory, TongueTypes.ElasticTongue);
 
-    this.matter.world.on('collisionstart', function (event) {
-      this.scene.processingBody(event.pairs[0].bodyA);
-      this.scene.processingBody(event.pairs[0].bodyB);
+    this.matter.world.on('collisionstart', (event: any) => {
+      this.processingBody(event.pairs[0].bodyA);
+      this.processingBody(event.pairs[0].bodyB);
     });
 
     this.panel = new GamePanel(
@@ -74,13 +75,31 @@ export class GameScene extends BaseScene {
   }
 
   processingBody(body: any) {
-    if (body.label == LevelObjectTypes.FLY) {
-      body.gameObject.destroy();
-      this.panel.updateFlyCount();
+    switch (body.label) {
+      case LevelObjectTypes.FLY:
+        this.frogEatFlyEventProcessing(body);
+        break;
+      case LevelObjectTypes.CACTUS:
+        this.frog.tongueHide();
+        break;
     }
-    if (body.label == LevelObjectTypes.CACTUS) {
-      this.frog.tongueHide();
-    }
+  }
+
+  frogEatFlyEventProcessing(flyBody: any) {
+    const fly = this.add.image(flyBody.position.x, flyBody.position.y, LevelObjectTypes.FLY);
+    flyBody.gameObject.destroy();
+    const path = this.frog.getTonquePath();
+    let pathSegmentId = 0;
+    const flyInterval = window.setInterval(() => {
+      if (pathSegmentId < path.length) {
+        fly.setPosition(path[pathSegmentId].x, path[pathSegmentId].y);
+        pathSegmentId++;
+      } else{
+        fly.destroy();
+        window.clearInterval(flyInterval);
+      }
+    }, 25);
+    this.panel.updateFlyCount();
   }
 
   update(time: number): void {
@@ -88,9 +107,10 @@ export class GameScene extends BaseScene {
     super.update(time);
   }
 
-  onButtonClick = () => {
+  onButtonClick() {
     this.scene.stop('GameScene');
     this.matter.world.destroy();
+    this.frog.destroy();
     this.scene.start("MenuScene");
   };
 }

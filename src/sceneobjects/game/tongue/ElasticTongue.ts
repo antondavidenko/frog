@@ -92,10 +92,10 @@ export class ElasticTongue extends LazyTongue implements ITongue {
       this.drawLine(this.tongueBodiesList[i], this.tongueBodiesList[i + 1]);
     }
 
-    let distance = this.pointsDistance(this.tongueBodiesList[2], this.tongueBodiesList[1]);
+    let distance = this.pointsDistance(this.tongueBodiesList[2] as any, this.tongueBodiesList[1] as any);
     let moveSpeed: number = Math.abs(velocityX) + Math.abs(velocityY);
 
-    if (distance > maxDistance && moveSpeed < maxDistance) {
+    if (distance > maxDistance && moveSpeed > minDistance) {
       this.addNewSegment();
     } else if (distance < minDistance && this.tongueBodiesList.length > tongueItemsCount) {
       this.deleteSegment();
@@ -103,7 +103,7 @@ export class ElasticTongue extends LazyTongue implements ITongue {
   }
 
   private checkForPointerAndBodyInSync(): void {
-    if (this.pointsDistance(this.tongueBodiesList[0], this.tonguePointer) >= 32 && this.tongueFirstBodyUnderCollision) {
+    if (this.pointsDistance(this.tongueBodiesList[0] as any, this.tonguePointer as any) >= 32 && this.tongueFirstBodyUnderCollision) {
       this.tonguePointer.x = this.tongueBodiesList[0].x;
       this.tonguePointer.y = this.tongueBodiesList[0].y;
       this.scene.input.setDragState(this.scene.input.mousePointer, 0);
@@ -139,7 +139,7 @@ export class ElasticTongue extends LazyTongue implements ITongue {
     }
   }
 
-  private pointsDistance(point1, point2): number {
+  private pointsDistance(point1: Phaser.Geom.Point, point2: Phaser.Geom.Point): number {
     return Phaser.Math.Distance.Between(point1.x, point1.y, point2.x, point2.y);
   }
 }
